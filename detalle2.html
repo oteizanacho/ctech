@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css">
+  <title>Detalle del Producto - Chinga Tech</title>
+  <style>
+    /* Estilos adicionales para la vista de detalle */
+    .product-detail{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 768px){
+      .product-detail{
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* Galería de imágenes */
+    .product-gallery{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .main-image{
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: var(--b) solid var(--ink);
+      box-shadow: var(--shadow);
+      background: #FFFFFF;
+      position: relative;
+    }
+    .main-image img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumbnail-grid{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+    .thumbnail{
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      border: var(--b) solid var(--ink);
+      box-shadow: var(--shadow-sm);
+      background: #FFFFFF;
+      cursor: pointer;
+      transition: transform .1s ease, box-shadow .1s ease;
+    }
+    .thumbnail:hover{
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow);
+    }
+    .thumbnail.active{
+      border-color: var(--primary);
+      border-width: 4px;
+    }
+    .thumbnail img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Información del producto */
+    .product-info{
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .product-header{
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .product-badge{
+      display: inline-block;
+      padding: 6px 12px;
+      font-weight: 800;
+      background: #FFD803;
+      border: var(--b) solid var(--ink);
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      width: fit-content;
+    }
+    .product-title{
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+    .product-subtitle{
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .product-rating{
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .stars{
+      display: flex;
+      gap: 4px;
+      font-size: 1.2rem;
+    }
+    .rating-text{
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    /* Precio */
+    .price-section{
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border: var(--b) solid var(--ink);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .price-current{
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+    .price-old{
+      font-size: 1.2rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      font-weight: 700;
+      margin-left: 0.8rem;
+    }
+    .price-discount{
+      display: inline-block;
+      padding: 4px 10px;
+      font-weight: 800;
+      background: #FF9B9B;
+      border: var(--b) solid var(--ink);
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      margin-left: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    /* Especificaciones principales */
+    .specs-highlight{
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border: var(--b) solid var(--ink);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .specs-grid{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .spec-item{
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .spec-label{
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .spec-value{
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    /* Botones de acción */
+    .action-buttons{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .btn-primary{
+      height: 56px;
+      font-size: 1.1rem;
+      background: var(--accent);
+      color: var(--ink);
+      font-weight: 900;
+    }
+    .btn-secondary{
+      height: 56px;
+      font-size: 1.1rem;
+      background: var(--blue);
+      color: var(--ink);
+      font-weight: 900;
+    }
+    .btn-wishlist{
+      height: 56px;
+      font-size: 1.1rem;
+      background: #FFFFFF;
+      color: var(--ink);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    /* Tabs de información */
+    .info-tabs{
+      margin-top: 3rem;
+    }
+    .tabs-header{
+      display: flex;
+      gap: 0.8rem;
+      border-bottom: var(--b) solid var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .tab-btn{
+      padding: 1rem 1.5rem;
+      font-weight: 900;
+      background: transparent;
+      border: none;
+      border-bottom: var(--b) solid transparent;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all .1s ease;
+      position: relative;
+      bottom: -3px;
+    }
+    .tab-btn.active{
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+    .tab-content{
+      padding: 1.5rem;
+      background: #FFFFFF;
+      border: var(--b) solid var(--ink);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .tab-panel{
+      display: none;
+    }
+    .tab-panel.active{
+      display: block;
+    }
+
+    .specs-full{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 640px){
+      .specs-full{
+        grid-template-columns: 1fr;
+      }
+    }
+    .spec-row{
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 2px solid #EAEAEA;
+    }
+    .spec-row:last-child{
+      border-bottom: none;
+    }
+    .spec-row-label{
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .spec-row-value{
+      font-weight: 900;
+    }
+
+    /* Productos relacionados */
+    .related-section{
+      margin-top: 4rem;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs{
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .breadcrumbs a{
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .breadcrumbs span{
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Inicio">
+        <div class="brand-badge">🌶️</div>
+        <div class="brand-name">Chinga Tech</div>
+      </a>
+
+      <form class="block search" role="search" aria-label="Buscar productos" onsubmit="event.preventDefault()">
+        <input type="search" placeholder="Buscar celulares, marcas, accesorios..." aria-label="Buscar" />
+        <button class="btn" type="submit" aria-label="Ejecutar búsqueda">Buscar</button>
+      </form>
+
+      <div class="user-panel">
+        <button class="icon-btn" aria-label="Favoritos">★</button>
+        <button class="icon-btn" aria-label="Carrito">🛒</button>
+        <button class="icon-btn" aria-label="Usuario">👤</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span>/</span>
+      <a href="#">Celulares</a>
+      <span>/</span>
+      <span>Smartphone Pro X</span>
+    </nav>
+
+    <!-- Producto -->
+    <div class="product-detail">
+      <!-- Galería -->
+      <div class="product-gallery">
+        <div class="main-image" id="mainImage">
+          <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop" alt="Smartphone Pro X - Vista frontal" id="mainImageSrc" />
+        </div>
+        <div class="thumbnail-grid">
+          <div class="thumbnail active" onclick="changeImage('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop', this)">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=300&auto=format&fit=crop" alt="Vista 1" />
+          </div>
+          <div class="thumbnail" onclick="changeImage('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop', this)">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=300&auto=format&fit=crop" alt="Vista 2" />
+          </div>
+          <div class="thumbnail" onclick="changeImage('https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1200&auto=format&fit=crop', this)">
+            <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=300&auto=format&fit=crop" alt="Vista 3" />
+          </div>
+          <div class="thumbnail" onclick="changeImage('https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=1200&auto=format&fit=crop', this)">
+            <img src="https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=300&auto=format&fit=crop" alt="Vista 4" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Información -->
+      <div class="product-info">
+        <div class="product-header">
+          <span class="product-badge">Más vendido #1</span>
+          <h1 class="product-title">Smartphone Pro X</h1>
+          <p class="product-subtitle">128 GB • 5G • Pantalla AMOLED</p>
+          <div class="product-rating">
+            <div class="stars">★★★★★</div>
+            <span class="rating-text">4.8 (234 reseñas)</span>
+          </div>
+        </div>
+
+        <!-- Precio -->
+        <div class="price-section">
+          <div>
+            <span class="price-current">$ 299.999</span>
+            <span class="price-old">$ 349.999</span>
+            <span class="price-discount">-14%</span>
+          </div>
+          <p style="margin-top: 0.8rem; font-weight: 700; color: var(--muted);">En 12 cuotas sin interés de $ 24.999</p>
+        </div>
+
+        <!-- Especificaciones destacadas -->
+        <div class="specs-highlight">
+          <h3 style="font-weight: 900; margin-bottom: 1rem; font-size: 1.2rem;">Especificaciones principales</h3>
+          <div class="specs-grid">
+            <div class="spec-item">
+              <span class="spec-label">Almacenamiento</span>
+              <span class="spec-value">128 GB</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">RAM</span>
+              <span class="spec-value">8 GB</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Pantalla</span>
+              <span class="spec-value">6.7" AMOLED</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Cámara</span>
+              <span class="spec-value">108 MP</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Batería</span>
+              <span class="spec-value">5000 mAh</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Procesador</span>
+              <span class="spec-value">Snapdragon 8 Gen 2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+          <button class="btn btn-primary">Comprar ahora</button>
+          <button class="btn btn-secondary">Agregar al carrito</button>
+          <button class="btn btn-wishlist">
+            <span>★</span>
+            <span>Agregar a favoritos</span>
+          </button>
+        </div>
+
+        <!-- Garantía y envío -->
+        <div class="block" style="padding: 1.5rem;">
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">🚚</span>
+              <div>
+                <div style="font-weight: 900;">Envío gratis</div>
+                <div style="font-weight: 700; color: var(--muted); font-size: 0.9rem;">En 24-48 horas</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">🛡️</span>
+              <div>
+                <div style="font-weight: 900;">Garantía 12 meses</div>
+                <div style="font-weight: 700; color: var(--muted); font-size: 0.9rem;">Cobertura total</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.8rem;">
+              <span style="font-size: 1.5rem;">↩️</span>
+              <div>
+                <div style="font-weight: 900;">Devolución gratis</div>
+                <div style="font-weight: 700; color: var(--muted); font-size: 0.9rem;">Hasta 30 días</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs de información -->
+    <div class="info-tabs">
+      <div class="tabs-header">
+        <button class="tab-btn active" onclick="switchTab('description', this)">Descripción</button>
+        <button class="tab-btn" onclick="switchTab('specs', this)">Especificaciones</button>
+        <button class="tab-btn" onclick="switchTab('reviews', this)">Reseñas</button>
+      </div>
+
+      <div class="tab-content">
+        <div id="description" class="tab-panel active">
+          <h3 style="font-weight: 900; margin-bottom: 1rem; font-size: 1.3rem;">Descripción del producto</h3>
+          <div style="display: flex; flex-direction: column; gap: 1rem; line-height: 1.6;">
+            <p style="font-weight: 700;">
+              El Smartphone Pro X es la última innovación en tecnología móvil, diseñado para ofrecer un rendimiento excepcional y una experiencia visual impresionante.
+            </p>
+            <p style="font-weight: 700;">
+              Con su pantalla AMOLED de 6.7 pulgadas, disfrutarás de colores vibrantes y negros profundos. El procesador Snapdragon 8 Gen 2 garantiza un rendimiento fluido en todas tus aplicaciones y juegos.
+            </p>
+            <p style="font-weight: 700;">
+              El sistema de cámara de 108 MP captura cada detalle con precisión, mientras que la batería de 5000 mAh te acompañará durante todo el día sin necesidad de recargar.
+            </p>
+            <h4 style="font-weight: 900; margin-top: 1.5rem; font-size: 1.1rem;">Características destacadas:</h4>
+            <ul style="padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; font-weight: 700;">
+              <li>Pantalla AMOLED de 6.7" con 120Hz de tasa de refresco</li>
+              <li>Cámara principal de 108 MP con estabilización óptica</li>
+              <li>Procesador de última generación para máximo rendimiento</li>
+              <li>Batería de larga duración con carga rápida de 65W</li>
+              <li>Resistente al agua IP68</li>
+              <li>Soporte 5G para conexiones ultrarrápidas</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="specs" class="tab-panel">
+          <h3 style="font-weight: 900; margin-bottom: 1rem; font-size: 1.3rem;">Especificaciones técnicas</h3>
+          <div class="specs-full">
+            <div class="spec-row">
+              <span class="spec-row-label">Pantalla</span>
+              <span class="spec-row-value">6.7" AMOLED</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Resolución</span>
+              <span class="spec-row-value">3200 x 1440 px</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Tasa de refresco</span>
+              <span class="spec-row-value">120 Hz</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Procesador</span>
+              <span class="spec-row-value">Snapdragon 8 Gen 2</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">RAM</span>
+              <span class="spec-row-value">8 GB</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Almacenamiento</span>
+              <span class="spec-row-value">128 GB</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Cámara principal</span>
+              <span class="spec-row-value">108 MP</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Cámara frontal</span>
+              <span class="spec-row-value">32 MP</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Batería</span>
+              <span class="spec-row-value">5000 mAh</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Carga rápida</span>
+              <span class="spec-row-value">65W</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Conectividad</span>
+              <span class="spec-row-value">5G, WiFi 6, Bluetooth 5.3</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-row-label">Resistencia</span>
+              <span class="spec-row-value">IP68</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="reviews" class="tab-panel">
+          <h3 style="font-weight: 900; margin-bottom: 1rem; font-size: 1.3rem;">Reseñas de clientes</h3>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="block" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.8rem;">
+                <div>
+                  <div style="font-weight: 900; margin-bottom: 0.4rem;">María González</div>
+                  <div style="display: flex; gap: 4px; margin-bottom: 0.4rem;">★★★★★</div>
+                  <div style="font-weight: 700; color: var(--muted); font-size: 0.9rem;">Hace 3 días</div>
+                </div>
+                <span class="chip" style="background: #A7F3D0">Verificado</span>
+              </div>
+              <p style="font-weight: 700; line-height: 1.6;">
+                Excelente teléfono, la pantalla es increíble y la batería dura todo el día. La cámara toma fotos espectaculares. Muy recomendado.
+              </p>
+            </div>
+
+            <div class="block" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.8rem;">
+                <div>
+                  <div style="font-weight: 900; margin-bottom: 0.4rem;">Carlos Rodríguez</div>
+                  <div style="display: flex; gap: 4px; margin-bottom: 0.4rem;">★★★★☆</div>
+                  <div style="font-weight: 700; color: var(--muted); font-size: 0.9rem;">Hace 1 semana</div>
+                </div>
+                <span class="chip" style="background: #A7F3D0">Verificado</span>
+              </div>
+              <p style="font-weight: 700; line-height: 1.6;">
+                Muy buen dispositivo, cumple con todas las expectativas. El único punto negativo es que se calienta un poco con uso intensivo, pero nada grave.
+              </p>
+            </div>
+
+            <div class="block" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.8rem;">
+                <div>
+                  <div style="font-weight: 900; margin-bottom: 0.4rem;">Ana Martínez</div>
+                  <div style="display: flex; gap: 4px; margin-bottom: 0.4rem;">★★★★★</div>
+                  <div style="font-weight: 700; color: var(--muted); font-size: 0.9rem;">Hace 2 semanas</div>
+                </div>
+                <span class="chip" style="background: #A7F3D0">Verificado</span>
+              </div>
+              <p style="font-weight: 700; line-height: 1.6;">
+                Increíble relación calidad-precio. La pantalla AMOLED es perfecta para ver contenido y los juegos corren súper fluido. Envío rápido y sin problemas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Productos relacionados -->
+    <section class="section related-section">
+      <div class="section-header">
+        <div class="section-title">Productos relacionados</div>
+        <a class="view-all" href="#">Ver todo</a>
+      </div>
+      <div class="grid">
+        <article class="block card">
+          <div class="card-media">
+            <img src="https://images.unsplash.com/photo-1510552776732-01acc9a4c224?q=80&w=1200&auto=format&fit=crop" alt="Lite S 5G" />
+            <span class="badge chip" style="background:#FFD803">#2</span>
+          </div>
+          <div class="card-title">Lite S 5G</div>
+          <div class="card-meta">256 GB • 120Hz</div>
+          <div class="price-row">
+            <div class="price">$ 249.999</div>
+            <button class="btn cta">Ver</button>
+          </div>
+        </article>
+
+        <article class="block card">
+          <div class="card-media">
+            <img src="https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=1200&auto=format&fit=crop" alt="Max Ultra" />
+            <span class="badge chip" style="background:#A7F3D0">#3</span>
+          </div>
+          <div class="card-title">Max Ultra</div>
+          <div class="card-meta">512 GB • Cámara 108MP</div>
+          <div class="price-row">
+            <div class="price">$ 379.999</div>
+            <button class="btn cta">Ver</button>
+          </div>
+        </article>
+
+        <article class="block card">
+          <div class="card-media">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop" alt="Compact M" />
+            <span class="badge chip" style="background:#93C5FD">#4</span>
+          </div>
+          <div class="card-title">Compact M</div>
+          <div class="card-meta">64 GB • Batería 5000mAh</div>
+          <div class="price-row">
+            <div class="price">$ 199.999</div>
+            <button class="btn cta">Ver</button>
+          </div>
+        </article>
+
+        <article class="block card">
+          <div class="card-media">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop" alt="Pro Mini" />
+            <span class="badge chip" style="background:#FF9B9B">Nuevo</span>
+          </div>
+          <div class="card-title">Pro Mini</div>
+          <div class="card-meta">128 GB • Compacto</div>
+          <div class="price-row">
+            <div class="price">$ 229.999</div>
+            <button class="btn cta">Ver</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-title">Contacto</div>
+        <a class="footer-link" href="mailto:hola@chingatech.com">hola@chingatech.com</a><br/>
+        <a class="footer-link" href="tel:+540800000000">0800-000-000</a>
+      </div>
+      <div>
+        <div class="footer-title">Ayuda</div>
+        <a class="footer-link" href="#">Envíos</a><br/>
+        <a class="footer-link" href="#">Devoluciones</a><br/>
+        <a class="footer-link" href="#">Garantías</a>
+      </div>
+      <div>
+        <div class="footer-title">Redes</div>
+        <a class="footer-link" href="#" aria-label="Instagram">Instagram</a><br/>
+        <a class="footer-link" href="#" aria-label="Twitter">Twitter</a><br/>
+        <a class="footer-link" href="#" aria-label="Facebook">Facebook</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Cambiar imagen principal
+    function changeImage(src, thumbnail) {
+      document.getElementById('mainImageSrc').src = src;
+      document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+      thumbnail.classList.add('active');
+    }
+
+    // Cambiar tabs
+    function switchTab(tabId, button) {
+      // Ocultar todos los paneles
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      // Quitar active de todos los botones
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      // Mostrar el panel seleccionado
+      document.getElementById(tabId).classList.add('active');
+      // Activar el botón seleccionado
+      button.classList.add('active');
+    }
+  </script>
+</body>
+</html>
+
