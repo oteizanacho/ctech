@@ -37,3 +37,28 @@
     });
 
     renderDots(); autoplay();
+
+
+
+// Cambiar imagen principal
+    function changeImage(src, thumbnail) {
+      document.getElementById('mainImageSrc').src = src;
+      document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+      thumbnail.classList.add('active');
+    }
+
+    // Cambiar tabs
+    function switchTab(tabId, button) {
+      // Ocultar todos los paneles
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      // Quitar active de todos los botones
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      // Mostrar el panel seleccionado
+      document.getElementById(tabId).classList.add('active');
+      // Activar el botón seleccionado
+      button.classList.add('active');
+    }

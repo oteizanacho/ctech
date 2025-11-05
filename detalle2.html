@@ -4,320 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <title>Detalle del Producto - Chinga Tech</title>
-  <style>
-    /* Estilos adicionales para la vista de detalle */
-    .product-detail{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    @media (max-width: 768px){
-      .product-detail{
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-
-    /* Galería de imágenes */
-    .product-gallery{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .main-image{
-      aspect-ratio: 1;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: var(--b) solid var(--ink);
-      box-shadow: var(--shadow);
-      background: #FFFFFF;
-      position: relative;
-    }
-    .main-image img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .thumbnail-grid{
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.8rem;
-    }
-    .thumbnail{
-      aspect-ratio: 1;
-      border-radius: 10px;
-      overflow: hidden;
-      border: var(--b) solid var(--ink);
-      box-shadow: var(--shadow-sm);
-      background: #FFFFFF;
-      cursor: pointer;
-      transition: transform .1s ease, box-shadow .1s ease;
-    }
-    .thumbnail:hover{
-      transform: translate(-2px, -2px);
-      box-shadow: var(--shadow);
-    }
-    .thumbnail.active{
-      border-color: var(--primary);
-      border-width: 4px;
-    }
-    .thumbnail img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Información del producto */
-    .product-info{
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .product-header{
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-    .product-badge{
-      display: inline-block;
-      padding: 6px 12px;
-      font-weight: 800;
-      background: #FFD803;
-      border: var(--b) solid var(--ink);
-      border-radius: 999px;
-      box-shadow: var(--shadow-sm);
-      width: fit-content;
-    }
-    .product-title{
-      font-size: 2rem;
-      font-weight: 900;
-      line-height: 1.2;
-    }
-    .product-subtitle{
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    .product-rating{
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    .stars{
-      display: flex;
-      gap: 4px;
-      font-size: 1.2rem;
-    }
-    .rating-text{
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    /* Precio */
-    .price-section{
-      padding: 1.5rem;
-      background: #FFFFFF;
-      border: var(--b) solid var(--ink);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .price-current{
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: var(--primary);
-    }
-    .price-old{
-      font-size: 1.2rem;
-      color: var(--muted);
-      text-decoration: line-through;
-      font-weight: 700;
-      margin-left: 0.8rem;
-    }
-    .price-discount{
-      display: inline-block;
-      padding: 4px 10px;
-      font-weight: 800;
-      background: #FF9B9B;
-      border: var(--b) solid var(--ink);
-      border-radius: 999px;
-      box-shadow: var(--shadow-sm);
-      margin-left: 0.8rem;
-      font-size: 0.9rem;
-    }
-
-    /* Especificaciones principales */
-    .specs-highlight{
-      padding: 1.5rem;
-      background: #FFFFFF;
-      border: var(--b) solid var(--ink);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .specs-grid{
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    .spec-item{
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .spec-label{
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .spec-value{
-      font-size: 1.1rem;
-      font-weight: 900;
-    }
-
-    /* Botones de acción */
-    .action-buttons{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .btn-primary{
-      height: 56px;
-      font-size: 1.1rem;
-      background: var(--accent);
-      color: var(--ink);
-      font-weight: 900;
-    }
-    .btn-secondary{
-      height: 56px;
-      font-size: 1.1rem;
-      background: var(--blue);
-      color: var(--ink);
-      font-weight: 900;
-    }
-    .btn-wishlist{
-      height: 56px;
-      font-size: 1.1rem;
-      background: #FFFFFF;
-      color: var(--ink);
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-    }
-
-    /* Tabs de información */
-    .info-tabs{
-      margin-top: 3rem;
-    }
-    .tabs-header{
-      display: flex;
-      gap: 0.8rem;
-      border-bottom: var(--b) solid var(--ink);
-      margin-bottom: 1.5rem;
-    }
-    .tab-btn{
-      padding: 1rem 1.5rem;
-      font-weight: 900;
-      background: transparent;
-      border: none;
-      border-bottom: var(--b) solid transparent;
-      cursor: pointer;
-      color: var(--muted);
-      transition: all .1s ease;
-      position: relative;
-      bottom: -3px;
-    }
-    .tab-btn.active{
-      color: var(--ink);
-      border-bottom-color: var(--ink);
-    }
-    .tab-content{
-      padding: 1.5rem;
-      background: #FFFFFF;
-      border: var(--b) solid var(--ink);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .tab-panel{
-      display: none;
-    }
-    .tab-panel.active{
-      display: block;
-    }
-
-    .specs-full{
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-    @media (max-width: 640px){
-      .specs-full{
-        grid-template-columns: 1fr;
-      }
-    }
-    .spec-row{
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem;
-      border-bottom: 2px solid #EAEAEA;
-    }
-    .spec-row:last-child{
-      border-bottom: none;
-    }
-    .spec-row-label{
-      font-weight: 700;
-      color: var(--muted);
-    }
-    .spec-row-value{
-      font-weight: 900;
-    }
-
-    /* Productos relacionados */
-    .related-section{
-      margin-top: 4rem;
-    }
-
-    /* Breadcrumbs */
-    .breadcrumbs{
-      margin-top: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-    .breadcrumbs a{
-      color: var(--ink);
-      text-decoration: none;
-    }
-    .breadcrumbs span{
-      color: var(--muted);
-    }
-  </style>
 </head>
 <body>
   <header>
-    <div class="container header-inner">
-      <a href="index.html" class="brand" aria-label="Inicio">
-        <div class="brand-badge">🌶️</div>
-        <div class="brand-name">Chinga Tech</div>
-      </a>
+  <div class="container header-inner">
+    <a href="#" class="brand" aria-label="Inicio">
+      <div class="brand-badge">🌶️</div>
+      <div class="brand-name">Chinga Tech</div>
+    </a>
 
-      <form class="block search" role="search" aria-label="Buscar productos" onsubmit="event.preventDefault()">
-        <input type="search" placeholder="Buscar celulares, marcas, accesorios..." aria-label="Buscar" />
-        <button class="btn" type="submit" aria-label="Ejecutar búsqueda">Buscar</button>
-      </form>
+    <form class="block search" role="search" aria-label="Buscar productos" onsubmit="event.preventDefault()">
+      <input type="search" placeholder="Buscar celulares, marcas, accesorios..." aria-label="Buscar" />
+      <button class="btn" type="submit" aria-label="Ejecutar búsqueda">Buscar</button>
+    </form>
 
-      <div class="user-panel">
-        <button class="icon-btn" aria-label="Favoritos">★</button>
-        <button class="icon-btn" aria-label="Carrito">🛒</button>
-        <button class="icon-btn" aria-label="Usuario">👤</button>
-      </div>
+    <div class="user-panel">
+      <button class="icon-btn" aria-label="Favoritos"><i class="far fa-bookmark"></i></button>
+      <button class="icon-btn" aria-label="Carrito"><i class="fas fa-shopping-cart"></i></button>
+      <button class="icon-btn" aria-label="Usuario"><i class="fas fa-user"></i></button>
     </div>
+  </div>
   </header>
 
   <main class="container">
@@ -664,31 +372,7 @@
       </div>
     </div>
   </footer>
-
-  <script>
-    // Cambiar imagen principal
-    function changeImage(src, thumbnail) {
-      document.getElementById('mainImageSrc').src = src;
-      document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-      thumbnail.classList.add('active');
-    }
-
-    // Cambiar tabs
-    function switchTab(tabId, button) {
-      // Ocultar todos los paneles
-      document.querySelectorAll('.tab-panel').forEach(panel => {
-        panel.classList.remove('active');
-      });
-      // Quitar active de todos los botones
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      // Mostrar el panel seleccionado
-      document.getElementById(tabId).classList.add('active');
-      // Activar el botón seleccionado
-      button.classList.add('active');
-    }
-  </script>
 </body>
+<script src="scripts.js"></script>
 </html>
 
