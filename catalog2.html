@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css">
+  <title>Catálogo de Celulares - Chinga Tech</title>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Inicio">
+        <div class="brand-badge">🌶️</div>
+        <div class="brand-name">Chinga Tech</div>
+      </a>
+
+      <form class="block search" role="search" aria-label="Buscar productos" onsubmit="event.preventDefault()">
+        <input type="search" placeholder="Buscar celulares, marcas, accesorios..." aria-label="Buscar" id="searchInput" />
+        <button class="btn" type="submit" aria-label="Ejecutar búsqueda">Buscar</button>
+      </form>
+
+      <div class="user-panel">
+        <button class="icon-btn" aria-label="Favoritos">★</button>
+        <button class="icon-btn" aria-label="Carrito">🛒</button>
+        <button class="icon-btn" aria-label="Usuario">👤</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Inicio</a>
+      <span>/</span>
+      <span>Catálogo de Celulares</span>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <div class="catalog-container">
+      <!-- Sidebar de filtros -->
+      <aside class="filters-sidebar">
+        <div class="filters-card">
+          <div class="filters-title">
+            <span>Filtros</span>
+            <span class="clear-filters" onclick="clearAllFilters()">Limpiar</span>
+          </div>
+
+          <!-- Rango de precio -->
+          <div class="filter-group">
+            <label class="filter-label">Precio</label>
+            <div class="price-range">
+              <div class="price-inputs">
+                <input type="number" class="price-input" id="priceMin" placeholder="Min" min="0" value="0" onchange="updatePriceRange()" />
+                <span style="font-weight: 900;">-</span>
+                <input type="number" class="price-input" id="priceMax" placeholder="Max" min="0" value="500000" onchange="updatePriceRange()" />
+              </div>
+              <input type="range" class="price-slider" id="priceSlider" min="0" max="500000" value="500000" oninput="updatePriceSlider(this.value)" />
+            </div>
+          </div>
+
+          <!-- Almacenamiento -->
+          <div class="filter-group">
+            <label class="filter-label">Almacenamiento</label>
+            <div class="filter-options">
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="storage" data-value="64" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">64 GB</span>
+                <span class="filter-count">(12)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="storage" data-value="128" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">128 GB</span>
+                <span class="filter-count">(24)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="storage" data-value="256" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">256 GB</span>
+                <span class="filter-count">(18)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="storage" data-value="512" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">512 GB</span>
+                <span class="filter-count">(8)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RAM -->
+          <div class="filter-group">
+            <label class="filter-label">RAM</label>
+            <div class="filter-options">
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="ram" data-value="4" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">4 GB</span>
+                <span class="filter-count">(6)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="ram" data-value="6" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">6 GB</span>
+                <span class="filter-count">(14)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="ram" data-value="8" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">8 GB</span>
+                <span class="filter-count">(28)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="ram" data-value="12" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">12 GB</span>
+                <span class="filter-count">(12)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pantalla -->
+          <div class="filter-group">
+            <label class="filter-label">Tamaño de Pantalla</label>
+            <div class="filter-options">
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="screen" data-value="small" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">Menos de 6"</span>
+                <span class="filter-count">(8)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="screen" data-value="medium" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">6" - 6.5"</span>
+                <span class="filter-count">(22)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="screen" data-value="large" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">Más de 6.5"</span>
+                <span class="filter-count">(30)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cámara -->
+          <div class="filter-group">
+            <label class="filter-label">Cámara Principal</label>
+            <div class="filter-options">
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="camera" data-value="48" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">48 MP</span>
+                <span class="filter-count">(15)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="camera" data-value="64" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">64 MP</span>
+                <span class="filter-count">(18)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="camera" data-value="108" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">108 MP</span>
+                <span class="filter-count">(12)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Marca -->
+          <div class="filter-group">
+            <label class="filter-label">Marca</label>
+            <div class="filter-options">
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="brand" data-value="samsung" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">Samsung</span>
+                <span class="filter-count">(16)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="brand" data-value="apple" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">Apple</span>
+                <span class="filter-count">(12)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="brand" data-value="xiaomi" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">Xiaomi</span>
+                <span class="filter-count">(14)</span>
+              </div>
+              <div class="filter-option">
+                <div class="filter-checkbox" data-filter="brand" data-value="motorola" onclick="toggleFilter(this)"></div>
+                <span class="filter-text" onclick="toggleFilter(this.previousElementSibling)">Motorola</span>
+                <span class="filter-count">(18)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Contenido principal -->
+      <div class="catalog-main">
+        <!-- Header del catálogo -->
+        <div class="catalog-header">
+          <div>
+            <h1 class="catalog-title">Catálogo de Celulares</h1>
+            <div class="catalog-count" id="productCount">Mostrando <span id="shownCount">12</span> de <span id="totalCount">62</span> productos</div>
+          </div>
+          <div class="sort-controls">
+            <span class="sort-label">Ordenar por:</span>
+            <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+              <option value="relevance">Relevancia</option>
+              <option value="price-asc">Precio: menor a mayor</option>
+              <option value="price-desc">Precio: mayor a menor</option>
+              <option value="name-asc">Nombre: A-Z</option>
+              <option value="name-desc">Nombre: Z-A</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-btn active" onclick="changeView('grid')" aria-label="Vista de cuadrícula">⊞</button>
+              <button class="view-btn" onclick="changeView('list')" aria-label="Vista de lista">☰</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="products-grid" id="productsGrid">
+          <!-- Los productos se cargarán dinámicamente -->
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+          Cargando más productos...
+        </div>
+
+        <!-- Botón cargar más -->
+        <div class="load-more" id="loadMoreSection">
+          <button class="btn load-more-btn" onclick="loadMoreProducts()">
+            Cargar más productos
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-title">Contacto</div>
+        <a class="footer-link" href="mailto:hola@chingatech.com">hola@chingatech.com</a><br/>
+        <a class="footer-link" href="tel:+540800000000">0800-000-000</a>
+      </div>
+      <div>
+        <div class="footer-title">Ayuda</div>
+        <a class="footer-link" href="#">Envíos</a><br/>
+        <a class="footer-link" href="#">Devoluciones</a><br/>
+        <a class="footer-link" href="#">Garantías</a>
+      </div>
+      <div>
+        <div class="footer-title">Redes</div>
+        <a class="footer-link" href="#" aria-label="Instagram">Instagram</a><br/>
+        <a class="footer-link" href="#" aria-label="Twitter">Twitter</a><br/>
+        <a class="footer-link" href="#" aria-label="Facebook">Facebook</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Base de datos de productos (simulada)
+    const allProducts = [
+      { id: 1, name: 'Smartphone Pro X', price: 299999, storage: 128, ram: 8, screen: 'large', camera: 108, brand: 'samsung', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop', specs: '128 GB • 5G • AMOLED', badge: 'Más vendido' },
+      { id: 2, name: 'Lite S 5G', price: 249999, storage: 256, ram: 8, screen: 'medium', camera: 64, brand: 'xiaomi', image: 'https://images.unsplash.com/photo-1510552776732-01acc9a4c224?q=80&w=400&auto=format&fit=crop', specs: '256 GB • 120Hz', badge: 'Nuevo' },
+      { id: 3, name: 'Max Ultra', price: 379999, storage: 512, ram: 12, screen: 'large', camera: 108, brand: 'samsung', image: 'https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=400&auto=format&fit=crop', specs: '512 GB • Cámara 108MP', badge: null },
+      { id: 4, name: 'Compact M', price: 199999, storage: 64, ram: 4, screen: 'small', camera: 48, brand: 'motorola', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=400&auto=format&fit=crop', specs: '64 GB • Batería 5000mAh', badge: 'Oferta' },
+      { id: 5, name: 'iPhone 15 Pro', price: 899999, storage: 256, ram: 8, screen: 'medium', camera: 48, brand: 'apple', image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?q=80&w=400&auto=format&fit=crop', specs: '256 GB • A17 Pro', badge: null },
+      { id: 6, name: 'Galaxy S24', price: 449999, storage: 256, ram: 12, screen: 'large', camera: 108, brand: 'samsung', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=400&auto=format&fit=crop', specs: '256 GB • Snapdragon 8 Gen 3', badge: 'Nuevo' },
+      { id: 7, name: 'Redmi Note 13', price: 159999, storage: 128, ram: 6, screen: 'medium', camera: 64, brand: 'xiaomi', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop', specs: '128 GB • 120Hz AMOLED', badge: 'Oferta' },
+      { id: 8, name: 'Edge 40 Pro', price: 329999, storage: 256, ram: 12, screen: 'large', camera: 108, brand: 'motorola', image: 'https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=400&auto=format&fit=crop', specs: '256 GB • Carga 125W', badge: null },
+      { id: 9, name: 'iPhone 14', price: 699999, storage: 128, ram: 6, screen: 'medium', camera: 48, brand: 'apple', image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?q=80&w=400&auto=format&fit=crop', specs: '128 GB • A16 Bionic', badge: null },
+      { id: 10, name: 'Galaxy A54', price: 229999, storage: 128, ram: 6, screen: 'medium', camera: 64, brand: 'samsung', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop', specs: '128 GB • 5G', badge: 'Popular' },
+      { id: 11, name: 'Poco X6 Pro', price: 279999, storage: 256, ram: 12, screen: 'large', camera: 64, brand: 'xiaomi', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop', specs: '256 GB • MediaTek Dimensity', badge: null },
+      { id: 12, name: 'Moto G84', price: 179999, storage: 128, ram: 8, screen: 'medium', camera: 50, brand: 'motorola', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=400&auto=format&fit=crop', specs: '128 GB • Pantalla pOLED', badge: 'Oferta' },
+      // Más productos para cargar más
+      { id: 13, name: 'iPhone 13', price: 599999, storage: 128, ram: 4, screen: 'medium', camera: 48, brand: 'apple', image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?q=80&w=400&auto=format&fit=crop', specs: '128 GB • A15 Bionic', badge: null },
+      { id: 14, name: 'Galaxy Z Fold5', price: 1299999, storage: 512, ram: 12, screen: 'large', camera: 108, brand: 'samsung', image: 'https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=400&auto=format&fit=crop', specs: '512 GB • Plegable', badge: 'Premium' },
+      { id: 15, name: 'Mi 14', price: 399999, storage: 256, ram: 12, screen: 'large', camera: 108, brand: 'xiaomi', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop', specs: '256 GB • Snapdragon 8 Gen 3', badge: 'Nuevo' },
+      { id: 16, name: 'Razr 40', price: 799999, storage: 256, ram: 8, screen: 'medium', camera: 64, brand: 'motorola', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=400&auto=format&fit=crop', specs: '256 GB • Plegable', badge: 'Premium' },
+      { id: 17, name: 'iPhone SE', price: 399999, storage: 64, ram: 4, screen: 'small', camera: 48, brand: 'apple', image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?q=80&w=400&auto=format&fit=crop', specs: '64 GB • A15 Bionic', badge: null },
+      { id: 18, name: 'Galaxy S23 FE', price: 349999, storage: 128, ram: 8, screen: 'medium', camera: 64, brand: 'samsung', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=400&auto=format&fit=crop', specs: '128 GB • Exynos 2200', badge: null },
+      { id: 19, name: 'Redmi 13C', price: 129999, storage: 128, ram: 6, screen: 'medium', camera: 50, brand: 'xiaomi', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=400&auto=format&fit=crop', specs: '128 GB • MediaTek Helio', badge: 'Oferta' },
+      { id: 20, name: 'Moto E40', price: 99999, storage: 64, ram: 4, screen: 'medium', camera: 48, brand: 'motorola', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=400&auto=format&fit=crop', specs: '64 GB • Unisoc T700', badge: 'Económico' },
+    ];
+
+    let currentProducts = [];
+    let displayedProducts = [];
+    let productsPerPage = 12;
+    let currentPage = 0;
+    let activeFilters = {
+      storage: [],
+      ram: [],
+      screen: [],
+      camera: [],
+      brand: [],
+      priceMin: 0,
+      priceMax: 500000
+    };
+    let currentSort = 'relevance';
+
+    // Inicializar
+    function init() {
+      currentProducts = [...allProducts];
+      applyFilters();
+      renderProducts();
+      updateProductCount();
+    }
+
+    // Toggle filtro
+    function toggleFilter(element) {
+      const filterType = element.dataset.filter;
+      const filterValue = element.dataset.value;
+      
+      if (!filterType || !filterValue) return;
+      
+      element.classList.toggle('checked');
+      
+      if (element.classList.contains('checked')) {
+        if (!activeFilters[filterType].includes(filterValue)) {
+          activeFilters[filterType].push(filterValue);
+        }
+      } else {
+        activeFilters[filterType] = activeFilters[filterType].filter(v => v !== filterValue);
+      }
+      
+      applyFilters();
+      renderProducts();
+      updateProductCount();
+    }
+
+    // Actualizar rango de precio
+    function updatePriceRange() {
+      const min = parseInt(document.getElementById('priceMin').value) || 0;
+      const max = parseInt(document.getElementById('priceMax').value) || 500000;
+      
+      activeFilters.priceMin = min;
+      activeFilters.priceMax = max;
+      
+      applyFilters();
+      renderProducts();
+      updateProductCount();
+    }
+
+    function updatePriceSlider(value) {
+      document.getElementById('priceMax').value = value;
+      updatePriceRange();
+    }
+
+    // Aplicar filtros
+    function applyFilters() {
+      currentProducts = allProducts.filter(product => {
+        // Filtro de precio
+        if (product.price < activeFilters.priceMin || product.price > activeFilters.priceMax) {
+          return false;
+        }
+        
+        // Filtro de almacenamiento
+        if (activeFilters.storage.length > 0 && !activeFilters.storage.includes(product.storage.toString())) {
+          return false;
+        }
+        
+        // Filtro de RAM
+        if (activeFilters.ram.length > 0 && !activeFilters.ram.includes(product.ram.toString())) {
+          return false;
+        }
+        
+        // Filtro de pantalla
+        if (activeFilters.screen.length > 0 && !activeFilters.screen.includes(product.screen)) {
+          return false;
+        }
+        
+        // Filtro de cámara
+        if (activeFilters.camera.length > 0 && !activeFilters.camera.includes(product.camera.toString())) {
+          return false;
+        }
+        
+        // Filtro de marca
+        if (activeFilters.brand.length > 0 && !activeFilters.brand.includes(product.brand)) {
+          return false;
+        }
+        
+        return true;
+      });
+      
+      sortProducts();
+      currentPage = 0;
+      displayedProducts = [];
+    }
+
+    // Ordenar productos
+    function sortProducts() {
+      const sortValue = document.getElementById('sortSelect').value || currentSort;
+      currentSort = sortValue;
+      
+      currentProducts.sort((a, b) => {
+        switch(sortValue) {
+          case 'price-asc':
+            return a.price - b.price;
+          case 'price-desc':
+            return b.price - a.price;
+          case 'name-asc':
+            return a.name.localeCompare(b.name);
+          case 'name-desc':
+            return b.name.localeCompare(a.name);
+          default:
+            return 0;
+        }
+      });
+    }
+
+    // Renderizar productos
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+      
+      const startIndex = currentPage * productsPerPage;
+      const endIndex = startIndex + productsPerPage;
+      const productsToShow = currentProducts.slice(startIndex, endIndex);
+      
+      displayedProducts = [...displayedProducts, ...productsToShow];
+      
+      productsToShow.forEach(product => {
+        const card = createProductCard(product);
+        grid.appendChild(card);
+      });
+      
+      updateLoadMoreButton();
+    }
+
+    // Crear card de producto
+    function createProductCard(product) {
+      const card = document.createElement('article');
+      card.className = 'product-card block';
+      card.onclick = () => window.location.href = `product-detail.html?id=${product.id}`;
+      
+      const badge = product.badge ? `<div class="product-badge">${product.badge}</div>` : '';
+      
+      card.innerHTML = `
+        <div class="product-image-wrapper">
+          <img src="${product.image}" alt="${product.name}" class="product-image" />
+          ${badge}
+        </div>
+        <div class="product-name">${product.name}</div>
+        <div class="product-specs">${product.specs}</div>
+        <div class="product-price">$ ${formatPrice(product.price)}</div>
+        <div class="product-actions">
+          <button class="btn btn-add-cart" onclick="event.stopPropagation(); addToCart(${product.id})">Agregar</button>
+          <button class="btn-favorite" onclick="event.stopPropagation(); toggleFavorite(this)" aria-label="Agregar a favoritos">★</button>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    // Cargar más productos
+    function loadMoreProducts() {
+      const loading = document.getElementById('loading');
+      const loadMoreSection = document.getElementById('loadMoreSection');
+      
+      loading.classList.add('show');
+      loadMoreSection.style.display = 'none';
+      
+      setTimeout(() => {
+        currentPage++;
+        const startIndex = currentPage * productsPerPage;
+        
+        if (startIndex < currentProducts.length) {
+          renderProducts();
+          loading.classList.remove('show');
+          loadMoreSection.style.display = 'block';
+        } else {
+          loading.classList.remove('show');
+          loadMoreSection.innerHTML = '<p style="font-weight: 900; text-align: center; padding: 2rem;">No hay más productos para mostrar</p>';
+        }
+      }, 500);
+    }
+
+    // Actualizar botón cargar más
+    function updateLoadMoreButton() {
+      const startIndex = (currentPage + 1) * productsPerPage;
+      const loadMoreSection = document.getElementById('loadMoreSection');
+      
+      if (startIndex >= currentProducts.length) {
+        loadMoreSection.innerHTML = '<p style="font-weight: 900; text-align: center; padding: 2rem;">No hay más productos para mostrar</p>';
+      }
+    }
+
+    // Actualizar contador
+    function updateProductCount() {
+      document.getElementById('shownCount').textContent = displayedProducts.length;
+      document.getElementById('totalCount').textContent = currentProducts.length;
+    }
+
+    // Limpiar filtros
+    function clearAllFilters() {
+      document.querySelectorAll('.filter-checkbox').forEach(cb => cb.classList.remove('checked'));
+      activeFilters = {
+        storage: [],
+        ram: [],
+        screen: [],
+        camera: [],
+        brand: [],
+        priceMin: 0,
+        priceMax: 500000
+      };
+      document.getElementById('priceMin').value = 0;
+      document.getElementById('priceMax').value = 500000;
+      applyFilters();
+      renderProducts();
+      updateProductCount();
+    }
+
+    // Cambiar vista
+    function changeView(view) {
+      const grid = document.getElementById('productsGrid');
+      document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      if (view === 'list') {
+        grid.style.gridTemplateColumns = '1fr';
+      } else {
+        grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(240px, 1fr))';
+      }
+    }
+
+    // Agregar al carrito
+    function addToCart(productId) {
+      alert(`Producto agregado al carrito!`);
+      // Aquí iría la lógica real de agregar al carrito
+    }
+
+    // Toggle favorito
+    function toggleFavorite(button) {
+      button.classList.toggle('active');
+    }
+
+    // Formatear precio
+    function formatPrice(price) {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Inicializar al cargar
+    init();
+  </script>
+</body>
+</html>
+
