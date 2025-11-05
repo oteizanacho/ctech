@@ -62,3 +62,26 @@
       // Activar el botón seleccionado
       button.classList.add('active');
     }
+
+
+
+// Cambiar tabs
+    function switchTab(tabId, button) {
+      // Ocultar todos los paneles
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      // Quitar active de todos los botones
+      document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      // Mostrar el panel seleccionado
+      document.getElementById(tabId).classList.add('active');
+      // Activar el botón seleccionado
+      button.classList.add('active');
+    }
+
+    // Toggle switch
+    function toggleSwitch(element) {
+      element.classList.toggle('active');
+    }
