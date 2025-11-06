@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>ctech</title>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="brand" aria-label="Inicio">
+                <div class="brand-badge"><i class="fas fa-pepper-hot"></i></div>
+                <div class="brand-name">Chinga Tech</div>
+            </a>
+            <form class="search block" role="search" aria-label="Buscar productos" onsubmit="event.preventDefault()">
+                <input class="block" type="search" placeholder="Buscar celulares, marcas, accesorios..." aria-label="Buscar"/>
+                <button class="btn" type="submit" aria-label="Ejecutar busqueda">Buscar</button>
+            </form>
+            <div class="user-panel">
+                <button class="icon-btn block" aria-label="Favoritos"><i class="far fa-bookmark"></i></button>
+                <button class="icon-btn block" aria-label="Carrito"><i class="fas fa-shopping-cart"></i></button>
+                <button class="icon-btn block" aria-label="Usuario"><i class="fas fa-user"></i></button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="block carousel" aria-roledescription="carrusel" aria-label="Promociones Destacadas">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide">
+                    <div class="slide-img"></div>
+                    <div class="slide-caption">
+                        <div><span class="chip">Nuevo</span></div>
+                        <div>Últimos lanzamientos</div>
+                        <div>Estrena el modelo tope de gama con envío gratis.</div>
+                    </div>
+                </div>
+                <!--aca van 2 iguales-->
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>
