@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>NeoPhone Store - Carrito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">📱</div>
+        <span>NeoPhone Store</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="products.html" class="nav-link">Ofertas</a>
+        <a href="products.html" class="nav-link">Marcas</a>
+        <a href="cart.html" class="nav-link nav-cta">Mi carrito (2)</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- MIGAS -->
+    <nav class="breadcrumbs">
+      <a href="index.html">Seguir comprando</a>
+      <span>/</span>
+      <span>Carrito de compras</span>
+    </nav>
+
+    <section class="cart-layout">
+      <!-- LISTA DE PRODUCTOS EN CARRITO -->
+      <article class="cart-list-card neo-card">
+        <h1 class="section-title">
+          <span class="section-badge"></span>
+          Tu carrito (maqueta)
+        </h1>
+        <p style="font-size:0.8rem; margin-bottom:10px;">
+          Esta vista muestra un ejemplo de cómo quedaría el detalle de los productos que vas a comprar.
+        </p>
+
+        <div class="cart-items">
+          <!-- ITEM 1 -->
+          <div class="cart-item">
+            <div class="cart-item-image">
+              Galaxy S24 Pro
+            </div>
+            <div>
+              <div class="cart-item-info-title">Galaxy S24 Pro 5G</div>
+              <div class="cart-item-meta">
+                <strong>Samsung</strong> · 256 GB · 12 GB RAM · Negro
+              </div>
+              <div class="cart-item-tags">
+                <span class="cart-tag">120Hz</span>
+                <span class="cart-tag">Cámara 200MP</span>
+              </div>
+            </div>
+            <div class="cart-item-actions">
+              <div class="cart-item-price">$ 1.099</div>
+              <div class="cart-item-qty">
+                Cantidad:
+                <span class="qty-pill">1</span>
+              </div>
+              <span class="remove-link">Quitar</span>
+            </div>
+          </div>
+
+          <!-- ITEM 2 -->
+          <div class="cart-item">
+            <div class="cart-item-image" style="background:linear-gradient(135deg,#ffe3f7,#ffb0f2);">
+              NeoPhone X Ultra
+            </div>
+            <div>
+              <div class="cart-item-info-title">NeoPhone X Ultra 5G</div>
+              <div class="cart-item-meta">
+                <strong>NeoPhone</strong> · 256 GB · 12 GB RAM · Rosa neón
+              </div>
+              <div class="cart-item-tags">
+                <span class="cart-tag">OLED</span>
+                <span class="cart-tag">Carga 80W</span>
+              </div>
+            </div>
+            <div class="cart-item-actions">
+              <div class="cart-item-price">$ 999</div>
+              <div class="cart-item-qty">
+                Cantidad:
+                <span class="qty-pill">1</span>
+              </div>
+              <span class="remove-link">Quitar</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="empty-cart-note">
+          Nota: el contenido es estático y no está conectado a un backend. Podés usar esta estructura como base para tu lógica real de carrito.
+        </p>
+      </article>
+
+      <!-- RESUMEN -->
+      <article class="cart-summary-card neo-card">
+        <h2 class="section-title">
+          <span class="section-badge" style="background:var(--accent-pink);"></span>
+          Resumen de compra
+        </h2>
+
+        <div class="summary-row">
+          <span>Subtotal productos (2)</span>
+          <strong>$ 2.098</strong>
+        </div>
+        <div class="summary-row">
+          <span>Envío</span>
+          <strong>$ 0</strong>
+        </div>
+        <div class="summary-row">
+          <span>Descuentos aplicados</span>
+          <strong>-$ 200</strong>
+        </div>
+        <div class="summary-row total">
+          <span>Total a pagar</span>
+          <strong>$ 1.898</strong>
+        </div>
+
+        <div class="summary-badge-row">
+          <span class="summary-pill">12 cuotas sin interés</span>
+          <span class="summary-pill">Envío 24h</span>
+          <span class="summary-pill">Garantía 1 año</span>
+        </div>
+
+        <div class="summary-actions">
+          <button class="btn-primary">
+            Finalizar compra
+          </button>
+          <button class="btn-ghost" onclick="window.location.href='index.html'">
+            Seguir explorando productos
+          </button>
+        </div>
+
+        <p style="font-size:0.75rem; opacity:0.75; margin-top:6px;">
+          Esta es una maqueta estática solo con HTML y CSS. Acá podrías conectar tu pasarela de pago real.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© 2025 NeoPhone Store · Carrito de compras maqueta.</div>
+      <div class="footer-links">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Ayuda</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
+

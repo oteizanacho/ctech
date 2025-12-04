@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>NeoPhone Store - Ecommerce de Celulares</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">📱</div>
+        <span>NeoPhone Store</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="products.html" class="nav-link">Ofertas</a>
+        <a href="products.html" class="nav-link">Marcas</a>
+        <a href="products.html" class="nav-link">Accesorios</a>
+        <a href="cart.html" class="nav-link nav-cta">Mi carrito (0)</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero neo-card">
+      <div class="hero-left">
+        <div class="hero-tag chip">Nuevo drop · Edición 2025</div>
+        <h1 class="hero-title">
+          Celulares sin drama,<br />
+          estilo máximo.
+        </h1>
+        <p class="hero-sub">
+          Explora la colección 2025 con los mejores smartphones, precios sin letra chica y envíos absurdamente rápidos.
+        </p>
+
+        <div class="hero-benefits">
+          <span class="hero-benefit">Envío 24h</span>
+          <span class="hero-benefit">Garantía 1 año</span>
+          <span class="hero-benefit">12 cuotas sin interés</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="products.html" class="btn-primary">
+            Ver catálogo completo
+          </a>
+          <button class="btn-ghost">
+            Ver mejores ofertas
+          </button>
+        </div>
+
+        <div class="hero-metrics">
+          <div>
+            <div class="hero-metric-label">Clientes felices</div>
+            <div class="hero-metric-value">+15.000</div>
+          </div>
+          <div>
+            <div class="hero-metric-label">Modelos activos</div>
+            <div class="hero-metric-value">120</div>
+          </div>
+          <div>
+            <div class="hero-metric-label">Puntaje</div>
+            <div class="hero-metric-value">4.9★</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-phone-card neo-card">
+          <div class="phone-image-frame">
+            <div class="phone-badge">Top ventas</div>
+            <div class="phone-image-placeholder">
+              NeoPhone X Ultra
+            </div>
+          </div>
+          <div class="phone-info">
+            <div class="phone-name">NeoPhone X Ultra 5G</div>
+            <div class="phone-tagline">Pantalla 120Hz · Cámara 108MP · Batería 5000mAh</div>
+            <div class="phone-price">$ 999 <small>USD</small></div>
+            <div class="phone-specs">
+              <span>256 GB</span>
+              <span>12 GB RAM</span>
+              <span>IP68</span>
+            </div>
+            <button class="btn-cart" style="width:100%; margin-top:4px;">
+              Añadir al carrito
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-mini-row">
+          <div class="hero-mini-card">
+            <div class="hero-mini-title">Retiro en tienda</div>
+            <p>Compra hoy y retira en 2 hs en puntos seleccionados.</p>
+          </div>
+          <div class="hero-mini-card">
+            <div class="hero-mini-title">Trade‑in fácil</div>
+            <p>Entregá tu celular usado y paga menos por el nuevo.</p>
+          </div>
+          <div class="hero-mini-card">
+            <div class="hero-mini-title">Soporte real</div>
+            <p>Personas reales, respuestas en menos de 5 minutos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSCADOR Y FILTROS -->
+    <section class="toolbar">
+      <form class="search">
+        <input type="text" placeholder="Buscar por marca, modelo o RAM..." />
+        <button type="submit">Buscar</button>
+      </form>
+
+      <div class="filters">
+        <button class="filter-chip is-active">Todos</button>
+        <button class="filter-chip">Gama alta</button>
+        <button class="filter-chip">Gama media</button>
+        <button class="filter-chip">+ 5G</button>
+        <button class="filter-chip">Ofertas</button>
+      </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section>
+      <div class="section-header">
+        <div>
+          <div class="section-title">
+            <span class="section-title-badge"></span>
+            Categorías rápidas
+          </div>
+          <p class="section-sub">
+            Filtra por el tipo de experiencia que querés: cámara, gaming, batería o todo junto.
+          </p>
+        </div>
+      </div>
+
+      <div class="categories-row">
+        <article class="category-card" style="background:#ffd6e8;">
+          <div class="category-name">Fotografía Pro</div>
+          <div class="category-meta">Cámaras 50MP+ · Estabilización óptica</div>
+        </article>
+        <article class="category-card" style="background:#d9f7ff;">
+          <div class="category-name">Gaming Mode</div>
+          <div class="category-meta">Pantalla 120Hz · Cooling avanzado</div>
+        </article>
+        <article class="category-card" style="background:#ffeeba;">
+          <div class="category-name">Batería infinita</div>
+          <div class="category-meta">5000mAh+ · Carga rápida 65W</div>
+        </article>
+        <article class="category-card" style="background:#d7ffd9;">
+          <div class="category-name">Compactos</div>
+          <div class="category-meta">Tamaño bolsillo · Peso ultra ligero</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section>
+      <div class="section-header" style="margin-top: 10px;">
+        <div>
+          <div class="section-title">
+            <span class="section-title-badge" style="background:var(--accent-green);"></span>
+            Destacados de hoy
+          </div>
+          <p class="section-sub">
+            Curamos 8 modelos que combinan precio, specs y diseño para que no tengas que pensar demasiado.
+          </p>
+        </div>
+        <span class="chip">Actualizado hoy · 8 modelos</span>
+      </div>
+
+      <div class="products-grid">
+        <!-- PRODUCTO 1 -->
+        <article class="product-card">
+          <div class="product-badge">-20%</div>
+          <div class="product-image">Imagen producto</div>
+          <div class="product-name">Galaxy S24 Pro 5G</div>
+          <div class="product-brand">Samsung</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 1.099</div>
+              <div class="product-price-old">$ 1.399</div>
+            </div>
+            <div class="product-installments">12 x $ 92</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">120Hz</span>
+            <span class="product-tag">Cámara 200MP</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 2 -->
+        <article class="product-card">
+          <div class="product-badge" style="background:#ff6b97;">Nuevo</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#ffe2cc,#ffcba7);">
+            Imagen producto
+          </div>
+          <div class="product-name">iPhone 16 Mini</div>
+          <div class="product-brand">Apple</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 899</div>
+              <div class="product-price-old">$ 999</div>
+            </div>
+            <div class="product-installments">12 x $ 75</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Compacto</span>
+            <span class="product-tag">OLED</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 3 -->
+        <article class="product-card">
+          <div class="product-badge" style="background:#3a86ff;">5G</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#e2f7ff,#a9e0ff);">
+            Imagen producto
+          </div>
+          <div class="product-name">Pixel 9 XL</div>
+          <div class="product-brand">Google</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 799</div>
+              <div class="product-price-old">$ 899</div>
+            </div>
+            <div class="product-installments">12 x $ 67</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Android puro</span>
+            <span class="product-tag">Cámara nocturna</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 4 -->
+        <article class="product-card">
+          <div class="product-badge" style="background:#8ac926;">Eco</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#f7ffe2,#e3ffad);">
+            Imagen producto
+          </div>
+          <div class="product-name">Moto G Power Max</div>
+          <div class="product-brand">Motorola</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 349</div>
+              <div class="product-price-old">$ 399</div>
+            </div>
+            <div class="product-installments">12 x $ 29</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Batería 6000mAh</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 5 -->
+        <article class="product-card">
+          <div class="product-badge">Hot</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#ffe3f7,#ffb0f2);">
+            Imagen producto
+          </div>
+          <div class="product-name">Xiaomi 14T Pro</div>
+          <div class="product-brand">Xiaomi</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 599</div>
+              <div class="product-price-old">$ 699</div>
+            </div>
+            <div class="product-installments">12 x $ 50</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Carga 120W</span>
+            <span class="product-tag">AMOLED</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 6 -->
+        <article class="product-card">
+          <div class="product-badge" style="background:#ff6b97;">Oferta</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#daf3ff,#bfe3ff);">
+            Imagen producto
+          </div>
+          <div class="product-name">Realme GT Neo 4</div>
+          <div class="product-brand">Realme</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 429</div>
+              <div class="product-price-old">$ 529</div>
+            </div>
+            <div class="product-installments">12 x $ 36</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Gaming</span>
+            <span class="product-tag">144Hz</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 7 -->
+        <article class="product-card">
+          <div class="product-badge" style="background:#3a86ff;">5G</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#fdf0d5,#f5c8a1);">
+            Imagen producto
+          </div>
+          <div class="product-name">Honor View 40</div>
+          <div class="product-brand">Honor</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 549</div>
+              <div class="product-price-old">$ 649</div>
+            </div>
+            <div class="product-installments">12 x $ 46</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Diseño premium</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+
+        <!-- PRODUCTO 8 -->
+        <article class="product-card">
+          <div class="product-badge" style="background:#8ac926;">Outlet</div>
+          <div class="product-image" style="background:linear-gradient(135deg,#e3ffe8,#cafcd7);">
+            Imagen producto
+          </div>
+          <div class="product-name">OnePlus Nord Lite</div>
+          <div class="product-brand">OnePlus</div>
+          <div class="product-price-row">
+            <div>
+              <div class="product-price">$ 299</div>
+              <div class="product-price-old">$ 379</div>
+            </div>
+            <div class="product-installments">12 x $ 25</div>
+          </div>
+          <div class="product-tags">
+            <span class="product-tag">Gama media</span>
+            <span class="product-tag">90Hz</span>
+          </div>
+          <div class="product-cta-row">
+            <button type="button" class="btn-cart">Agregar</button>
+            <button class="btn-wishlist">❤</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>© 2025 NeoPhone Store · Ecommerce de celulares sin drama.</div>
+      <div class="footer-links">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Ayuda</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Redirección a la vista de detalle al hacer click en cualquier tarjeta de producto
+    document.querySelectorAll('.product-card').forEach(function (card) {
+      card.addEventListener('click', function (event) {
+        // Evitamos que los clicks en botones internos disparen la navegación
+        if (event.target.closest('button')) return;
+        window.location.href = 'productDetail.html';
+      });
+    });
+
+    // Desde index: al presionar "Agregar" en cualquier producto, ir al carrito
+    document.querySelectorAll('.btn-cart').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        window.location.href = 'cart.html';
+      });
+    });
+  </script>
+</body>
+</html>
