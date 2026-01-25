@@ -35,6 +35,12 @@
   />
 
   <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Scripts para Google Sheets y funcionalidad -->
+  <script src="js/config.js"></script>
+  <script src="js/apiClient.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/productRenderer.js"></script>
 </head>
 <body>
   <!-- HEADER -->
@@ -204,202 +210,10 @@
         <span class="chip">Actualizado hoy · 8 modelos</span>
       </div>
 
-      <div class="products-grid">
-        <!-- PRODUCTO 1 -->
-        <article class="product-card">
-          <div class="product-badge">-20%</div>
-          <div class="product-image">Imagen producto</div>
-          <div class="product-name">Galaxy S24 Pro 5G</div>
-          <div class="product-brand">Samsung</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 1.099</div>
-              <div class="product-price-old">$ 1.399</div>
-            </div>
-            <div class="product-installments">12 x $ 92</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">120Hz</span>
-            <span class="product-tag">Cámara 200MP</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 2 -->
-        <article class="product-card">
-          <div class="product-badge" style="background:#ff6b97;">Nuevo</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#ffe2cc,#ffcba7);">
-            Imagen producto
-          </div>
-          <div class="product-name">iPhone 16 Mini</div>
-          <div class="product-brand">Apple</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 899</div>
-              <div class="product-price-old">$ 999</div>
-            </div>
-            <div class="product-installments">12 x $ 75</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Compacto</span>
-            <span class="product-tag">OLED</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 3 -->
-        <article class="product-card">
-          <div class="product-badge" style="background:#3a86ff;">5G</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#e2f7ff,#a9e0ff);">
-            Imagen producto
-          </div>
-          <div class="product-name">Pixel 9 XL</div>
-          <div class="product-brand">Google</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 799</div>
-              <div class="product-price-old">$ 899</div>
-            </div>
-            <div class="product-installments">12 x $ 67</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Android puro</span>
-            <span class="product-tag">Cámara nocturna</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 4 -->
-        <article class="product-card">
-          <div class="product-badge" style="background:#8ac926;">Eco</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#f7ffe2,#e3ffad);">
-            Imagen producto
-          </div>
-          <div class="product-name">Moto G Power Max</div>
-          <div class="product-brand">Motorola</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 349</div>
-              <div class="product-price-old">$ 399</div>
-            </div>
-            <div class="product-installments">12 x $ 29</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Batería 6000mAh</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 5 -->
-        <article class="product-card">
-          <div class="product-badge">Hot</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#ffe3f7,#ffb0f2);">
-            Imagen producto
-          </div>
-          <div class="product-name">Xiaomi 14T Pro</div>
-          <div class="product-brand">Xiaomi</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 599</div>
-              <div class="product-price-old">$ 699</div>
-            </div>
-            <div class="product-installments">12 x $ 50</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Carga 120W</span>
-            <span class="product-tag">AMOLED</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 6 -->
-        <article class="product-card">
-          <div class="product-badge" style="background:#ff6b97;">Oferta</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#daf3ff,#bfe3ff);">
-            Imagen producto
-          </div>
-          <div class="product-name">Realme GT Neo 4</div>
-          <div class="product-brand">Realme</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 429</div>
-              <div class="product-price-old">$ 529</div>
-            </div>
-            <div class="product-installments">12 x $ 36</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Gaming</span>
-            <span class="product-tag">144Hz</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 7 -->
-        <article class="product-card">
-          <div class="product-badge" style="background:#3a86ff;">5G</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#fdf0d5,#f5c8a1);">
-            Imagen producto
-          </div>
-          <div class="product-name">Honor View 40</div>
-          <div class="product-brand">Honor</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 549</div>
-              <div class="product-price-old">$ 649</div>
-            </div>
-            <div class="product-installments">12 x $ 46</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Diseño premium</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
-
-        <!-- PRODUCTO 8 -->
-        <article class="product-card">
-          <div class="product-badge" style="background:#8ac926;">Outlet</div>
-          <div class="product-image" style="background:linear-gradient(135deg,#e3ffe8,#cafcd7);">
-            Imagen producto
-          </div>
-          <div class="product-name">OnePlus Nord Lite</div>
-          <div class="product-brand">OnePlus</div>
-          <div class="product-price-row">
-            <div>
-              <div class="product-price">$ 299</div>
-              <div class="product-price-old">$ 379</div>
-            </div>
-            <div class="product-installments">12 x $ 25</div>
-          </div>
-          <div class="product-tags">
-            <span class="product-tag">Gama media</span>
-            <span class="product-tag">90Hz</span>
-          </div>
-          <div class="product-cta-row">
-            <button type="button" class="btn-cart">Agregar</button>
-            <button class="btn-wishlist">❤</button>
-          </div>
-        </article>
+      <div class="products-grid" id="products-grid">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+          <p>Cargando productos...</p>
+        </div>
       </div>
     </section>
   </main>
@@ -416,22 +230,6 @@
     </div>
   </footer>
 
-  <script>
-    // Redirección a la vista de detalle al hacer click en cualquier tarjeta de producto
-    document.querySelectorAll('.product-card').forEach(function (card) {
-      card.addEventListener('click', function (event) {
-        // Evitamos que los clicks en botones internos disparen la navegación
-        if (event.target.closest('button')) return;
-        window.location.href = 'productDetail.html';
-      });
-    });
-
-    // Desde index: al presionar "Agregar" en cualquier producto, ir al carrito
-    document.querySelectorAll('.btn-cart').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        window.location.href = 'cart.html';
-      });
-    });
-  </script>
+  <script src="js/index.js"></script>
 </body>
 </html>

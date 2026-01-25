@@ -34,6 +34,12 @@
   />
 
   <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Scripts para Google Sheets y funcionalidad -->
+  <script src="js/config.js"></script>
+  <script src="js/apiClient.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/productRenderer.js"></script>
 </head>
 <body>
   <!-- HEADER -->
@@ -62,156 +68,15 @@
     </nav>
 
     <!-- LAYOUT PRINCIPAL -->
-    <section class="product-layout">
-      <!-- GALERÍA -->
-      <article class="gallery-card neo-card">
-        <div class="gallery-main">
-          <div class="gallery-badge">Top ventas 2025</div>
-          <div class="gallery-label">Gira para ver 360º (solo maqueta)</div>
-          NeoPhone X Ultra 5G
-        </div>
-
-        <div class="gallery-thumbs">
-          <div class="thumb is-active">Frente</div>
-          <div class="thumb">Espalda</div>
-          <div class="thumb">Lado</div>
-          <div class="thumb">Caja</div>
-        </div>
-      </article>
-
-      <!-- INFO PRODUCTO -->
-      <article class="product-info-card neo-card">
-        <div class="product-label-row">
-          <span class="product-brand-chip">NeoPhone</span>
-          <span class="chip">Nuevo · 2025</span>
-          <span class="product-rating">4.9★ · 324 reseñas</span>
-        </div>
-
-        <div>
-          <h1 class="product-name">NeoPhone X Ultra 5G · 256 GB · 12 GB RAM</h1>
-          <p class="product-subtitle">
-            Pantalla OLED 6.8" 120Hz, triple cámara 108MP con modo noche, batería 5000mAh con carga rápida 80W.
-          </p>
-        </div>
-
-        <div class="price-block">
-          <div class="price-main">
-            <div class="price-current">$ 999 <span style="font-size:0.85rem;">USD</span></div>
-            <div class="price-old">$ 1.199 USD</div>
-            <div class="price-savings">Ahorrás $ 200 · Envío gratis 24h</div>
-          </div>
-          <div class="price-installments">
-            Hasta <strong>12 cuotas sin interés</strong><br />
-            Desde <strong>$ 83 / mes</strong> con tarjeta
-          </div>
-        </div>
-
-        <div class="product-options">
-          <div class="option-block">
-            <div class="option-title">Capacidad</div>
-            <div class="option-list">
-              <button type="button" class="pill">128 GB</button>
-              <button type="button" class="pill is-active">256 GB</button>
-              <button type="button" class="pill">512 GB</button>
-            </div>
-          </div>
-
-          <div class="option-block">
-            <div class="option-title">Color</div>
-            <div class="option-list">
-              <button type="button" class="pill is-active">Negro mate</button>
-              <button type="button" class="pill">Blanco hielo</button>
-              <button type="button" class="pill">Rosa neón</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-actions">
-          <button class="btn-primary" id="add-to-cart-detail">
-            Añadir al carrito
-          </button>
-          <button class="btn-ghost">
-            Guardar para después
-          </button>
-        </div>
-
-        <div class="product-meta-row">
-          <span class="meta-item">Stock: disponible</span>
-          <span class="meta-item">Envío 24h</span>
-          <span class="meta-item">Garantía oficial 12 meses</span>
-          <span class="meta-item">Devolución en 30 días</span>
-        </div>
-      </article>
+    <section class="product-layout" id="product-layout">
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+        <p>Cargando producto...</p>
+      </div>
     </section>
 
     <!-- ESPECIFICACIONES Y DESCRIPCIÓN -->
-    <section class="detail-sections">
-      <article class="specs-card neo-card">
-        <h2 class="section-title">
-          <span class="section-badge"></span>
-          Especificaciones técnicas
-        </h2>
-
-        <div class="specs-grid">
-          <div class="spec-item">
-            <div class="spec-label">Pantalla</div>
-            <div class="spec-value">6.8" OLED · 120Hz</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Procesador</div>
-            <div class="spec-value">Snapdragon serie 8 Gen</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Memoria</div>
-            <div class="spec-value">12 GB RAM · 256 GB</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Cámaras</div>
-            <div class="spec-value">108MP + 12MP + 8MP</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Batería</div>
-            <div class="spec-value">5000mAh · Carga 80W</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Conectividad</div>
-            <div class="spec-value">5G · WiFi 6E · NFC</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Resistencia</div>
-            <div class="spec-value">IP68 · Gorilla Glass</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Sistema</div>
-            <div class="spec-value">Android 15 · NeoOS</div>
-          </div>
-        </div>
-      </article>
-
-      <article class="description-card neo-card">
-        <h2 class="section-title">
-          <span class="section-badge" style="background:var(--accent-pink);"></span>
-          Lo que hace especial a este modelo
-        </h2>
-
-        <p>
-          El NeoPhone X Ultra 5G está pensado para quienes quieren un celular que se vea brutal, saque fotos increíbles y no muera a mitad del día.
-        </p>
-        <p>
-          Su pantalla OLED de 120Hz hace que todo se vea ultra fluido, mientras que la triple cámara de 108MP captura desde selfies nocturnas hasta videos 4K estables.
-        </p>
-
-        <ul class="description-list">
-          <li>Modo noche mejorado para fotos claras incluso con poca luz.</li>
-          <li>Sonido estéreo con alta definición para juegos y contenido.</li>
-          <li>Carga rápida 80W: de 0 a 60% en unos 20 minutos aproximados.</li>
-          <li>Diseño neobrutalista que combina líneas fuertes con colores vibrantes.</li>
-        </ul>
-
-        <p style="margin-top:10px; font-size:0.8rem; opacity:0.8;">
-          Esta es una maqueta estática solo con HTML y CSS, ideal como base para conectar luego a tu backend o a datos reales.
-        </p>
-      </article>
+    <section class="detail-sections" id="detail-sections">
+      <!-- Se cargará dinámicamente -->
     </section>
   </main>
 
@@ -226,14 +91,6 @@
     </div>
   </footer>
 
-  <script>
-    // Desde productDetail: al presionar "Añadir al carrito", ir al carrito
-    var detailBtn = document.getElementById('add-to-cart-detail');
-    if (detailBtn) {
-      detailBtn.addEventListener('click', function () {
-        window.location.href = 'cart.html';
-      });
-    }
-  </script>
+  <script src="js/productDetail.js"></script>
 </body>
 </html>

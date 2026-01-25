@@ -1,0 +1,27 @@
+{
+  "name": "chingatech-store",
+  "version": "1.0.0",
+  "description": "Ecommerce de celulares con integración a Google Sheets",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:vercel": "vercel dev --listen 3000",
+    "start": "node server.js",
+    "build": "echo 'No build step required'"
+  },
+  "keywords": [
+    "ecommerce",
+    "celulares",
+    "google-sheets"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "google-auth-library": "^10.5.0",
+    "google-spreadsheet": "^4.1.1"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0"
+  }
+}

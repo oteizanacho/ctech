@@ -34,6 +34,12 @@
   />
 
   <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Scripts para Google Sheets y funcionalidad -->
+  <script src="js/config.js"></script>
+  <script src="js/googleSheets.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/productRenderer.js"></script>
 </head>
 <body>
   <!-- HEADER -->
@@ -72,55 +78,9 @@
           Esta vista muestra un ejemplo de cómo quedaría el detalle de los productos que vas a comprar.
         </p>
 
-        <div class="cart-items">
-          <!-- ITEM 1 -->
-          <div class="cart-item">
-            <div class="cart-item-image">
-              Galaxy S24 Pro
-            </div>
-            <div>
-              <div class="cart-item-info-title">Galaxy S24 Pro 5G</div>
-              <div class="cart-item-meta">
-                <strong>Samsung</strong> · 256 GB · 12 GB RAM · Negro
-              </div>
-              <div class="cart-item-tags">
-                <span class="cart-tag">120Hz</span>
-                <span class="cart-tag">Cámara 200MP</span>
-              </div>
-            </div>
-            <div class="cart-item-actions">
-              <div class="cart-item-price">$ 1.099</div>
-              <div class="cart-item-qty">
-                Cantidad:
-                <span class="qty-pill">1</span>
-              </div>
-              <span class="remove-link">Quitar</span>
-            </div>
-          </div>
-
-          <!-- ITEM 2 -->
-          <div class="cart-item">
-            <div class="cart-item-image" style="background:linear-gradient(135deg,#ffe3f7,#ffb0f2);">
-              NeoPhone X Ultra
-            </div>
-            <div>
-              <div class="cart-item-info-title">NeoPhone X Ultra 5G</div>
-              <div class="cart-item-meta">
-                <strong>NeoPhone</strong> · 256 GB · 12 GB RAM · Rosa neón
-              </div>
-              <div class="cart-item-tags">
-                <span class="cart-tag">OLED</span>
-                <span class="cart-tag">Carga 80W</span>
-              </div>
-            </div>
-            <div class="cart-item-actions">
-              <div class="cart-item-price">$ 999</div>
-              <div class="cart-item-qty">
-                Cantidad:
-                <span class="qty-pill">1</span>
-              </div>
-              <span class="remove-link">Quitar</span>
-            </div>
+        <div class="cart-items" id="cart-items">
+          <div style="text-align: center; padding: 40px;">
+            <p>Cargando carrito...</p>
           </div>
         </div>
 
@@ -136,21 +96,17 @@
           Resumen de compra
         </h2>
 
-        <div class="summary-row">
-          <span>Subtotal productos (2)</span>
-          <strong>$ 2.098</strong>
+        <div class="summary-row" id="summary-subtotal">
+          <span>Subtotal productos</span>
+          <strong>$ 0</strong>
         </div>
         <div class="summary-row">
           <span>Envío</span>
           <strong>$ 0</strong>
         </div>
-        <div class="summary-row">
-          <span>Descuentos aplicados</span>
-          <strong>-$ 200</strong>
-        </div>
-        <div class="summary-row total">
+        <div class="summary-row total" id="summary-total">
           <span>Total a pagar</span>
-          <strong>$ 1.898</strong>
+          <strong>$ 0</strong>
         </div>
 
         <div class="summary-badge-row">
@@ -160,8 +116,8 @@
         </div>
 
         <div class="summary-actions">
-          <button class="btn-primary">
-            Finalizar compra
+          <button class="btn-primary" id="checkout-btn">
+            Comprar por WhatsApp
           </button>
           <button class="btn-ghost" onclick="window.location.href='index.html'">
             Seguir explorando productos
@@ -185,6 +141,8 @@
       </div>
     </div>
   </footer>
+  
+  <script src="js/cartPage.js"></script>
 </body>
 </html>
 
