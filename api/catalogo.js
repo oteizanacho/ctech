@@ -111,7 +111,7 @@ module.exports = async (req, res) => {
           if (value === undefined || value === null) {
             value = row[header] || '';
           }
-          
+          /*
           // Convertir valores numéricos si es necesario
           if (typeof value === 'string' && value.trim() !== '') {
             // Intentar convertir a número si parece ser numérico
@@ -124,7 +124,7 @@ module.exports = async (req, res) => {
               }
             }
           }
-          
+          */
           producto[cleanHeader] = value;
         }
       });
