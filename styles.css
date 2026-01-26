@@ -578,8 +578,6 @@ header {
   object-fit: cover;
   display: block;
 }
-  margin-bottom: 4px;
-}
 
 .product-name {
   font-size: 0.85rem;
@@ -1347,6 +1345,7 @@ footer {
   padding: 4px 0;
   flex: 1;
   -webkit-overflow-scrolling: touch;
+  flex-wrap: wrap;
 }
 
 .marca-slider::-webkit-scrollbar {
