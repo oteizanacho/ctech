@@ -385,9 +385,8 @@ header {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 24px;
-  flex-direction: column;
 }
 
 .search {
@@ -578,6 +577,8 @@ header {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+  margin-bottom: 4px;
 }
 
 .product-name {
@@ -1346,7 +1347,6 @@ footer {
   padding: 4px 0;
   flex: 1;
   -webkit-overflow-scrolling: touch;
-  flex-wrap: wrap;
 }
 
 .marca-slider::-webkit-scrollbar {
