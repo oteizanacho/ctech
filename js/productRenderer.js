@@ -132,7 +132,7 @@ class ProductRenderer {
           <div class="price-block">
             <div class="price-main">
               <div class="price-current">${this.formatPrice(price, CONFIG.defaultCurrency)}</div>
-              <div class="price-savings">Envío gratis 24h</div>
+              
             </div>
             ${installments ? `
               <div class="price-installments">
@@ -162,9 +162,6 @@ class ProductRenderer {
           <div class="product-actions">
             <button class="btn-primary" id="add-to-cart-detail" data-product-id="${product.id}">
               Comprar por WhatsApp
-            </button>
-            <button class="btn-ghost" id="add-to-cart-wishlist" data-product-id="${product.id}">
-              Guardar para después
             </button>
           </div>
           <div class="product-meta-row">
