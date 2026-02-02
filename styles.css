@@ -1002,6 +1002,84 @@ header {
   margin-top: 4px;
 }
 
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.store-alias-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alias-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.alias-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border: 2px solid #111;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  font-family: 'Courier New', monospace;
+}
+
+.alias-value span {
+  flex: 1;
+}
+
+.btn-copy {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-copy:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.btn-copy-small {
+  background: transparent;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-copy-small:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .product-meta-row {
   display: flex;
   flex-wrap: wrap;

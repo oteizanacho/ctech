@@ -119,24 +119,119 @@ function setupGallery(product) {
 }
 
 function setupEventListeners(product) {
-  // Botón comprar por WhatsApp
-  const whatsappBtn = document.getElementById('whatsapp-btn');
-  if (whatsappBtn) {
-    whatsappBtn.addEventListener('click', function() {
+  // Botón enviar comprobante
+  const sendReceiptBtn = document.getElementById('send-receipt-btn');
+  if (sendReceiptBtn) {
+    sendReceiptBtn.addEventListener('click', function() {
       redirectToWhatsApp(product, CONFIG.whatsappNumber);
+    });
+  }
+  
+  // Botón copiar alias
+  const copyAliasBtn = document.getElementById('copy-alias-btn');
+  if (copyAliasBtn) {
+    copyAliasBtn.addEventListener('click', function() {
+      const alias = this.closest('#store-alias').dataset.alias;
+      copyToClipboard(alias, 'Alias copiado al portapapeles');
+    });
+  }
+  
+  // Botón copiar precio ARS
+  const copyPriceBtn = document.querySelector('.btn-copy-small[data-price]');
+  if (copyPriceBtn) {
+    copyPriceBtn.addEventListener('click', function() {
+      const price = this.dataset.price;
+      const priceFormatted = parseFloat(price).toLocaleString('es-AR', {
+        style: 'currency',
+        currency: 'ARS',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+      copyToClipboard(priceFormatted, 'Precio copiado al portapapeles');
     });
   }
 }
 
-// Función para redirigir a WhatsApp
+// Función para copiar al portapapeles
+function copyToClipboard(text, successMessage = 'Copiado al portapapeles') {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showCopyFeedback(successMessage);
+    }).catch(err => {
+      console.error('Error al copiar:', err);
+      fallbackCopyToClipboard(text, successMessage);
+    });
+  } else {
+    fallbackCopyToClipboard(text, successMessage);
+  }
+}
+
+// Fallback para navegadores que no soportan Clipboard API
+function fallbackCopyToClipboard(text, successMessage) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-999999px';
+  textArea.style.top = '-999999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  
+  try {
+    document.execCommand('copy');
+    showCopyFeedback(successMessage);
+  } catch (err) {
+    console.error('Error al copiar:', err);
+    alert('No se pudo copiar al portapapeles. Por favor, copia manualmente: ' + text);
+  }
+  
+  document.body.removeChild(textArea);
+}
+
+// Mostrar feedback visual al copiar
+function showCopyFeedback(message) {
+  // Crear o actualizar elemento de feedback
+  let feedback = document.getElementById('copy-feedback');
+  if (!feedback) {
+    feedback = document.createElement('div');
+    feedback.id = 'copy-feedback';
+    feedback.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 10000;
+      font-weight: 600;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    `;
+    document.body.appendChild(feedback);
+  }
+  
+  feedback.textContent = message;
+  feedback.style.opacity = '1';
+  feedback.style.transform = 'translateY(0)';
+  
+  setTimeout(() => {
+    feedback.style.opacity = '0';
+    feedback.style.transform = 'translateY(-10px)';
+  }, 2000);
+}
+
+// Función para redirigir a WhatsApp (enviar comprobante)
 function redirectToWhatsApp(product, whatsappNumber) {
   const modeloStr = String(product.modelo || 'Producto');
   const marcaStr = String(product.marca || '');
-  const precio = CONFIG.defaultCurrency === 'usd' ? product.contado_usd : product.contado_ars;
+  const precio = product.contado_ars;
   const precioFormateado = precio ? precio.toLocaleString('es-AR') : 'Consultar';
-  const moneda = CONFIG.defaultCurrency === 'usd' ? 'USD' : 'ARS';
   
-  const mensaje = `Hola! Me interesa el ${marcaStr} ${modeloStr}. Precio: $${precioFormateado} ${moneda}`;
+  const mensaje = `Hola! Quiero enviar el comprobante de pago para el ${marcaStr} ${modeloStr} ($${precioFormateado} ARS)`;
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
 }
