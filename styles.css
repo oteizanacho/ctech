@@ -724,6 +724,29 @@ header {
   position: relative;
   box-shadow: 4px 4px 0 #111;
   margin-bottom: 10px;
+  padding: 20px;
+  background-color: #fff !important;
+  overflow: hidden;
+}
+
+.gallery-main[style*="--main-image"]::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border-radius: 14px;
+  background-image: var(--main-image);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.gallery-main > * {
+  position: relative;
+  z-index: 1;
 }
 
 .gallery-badge {

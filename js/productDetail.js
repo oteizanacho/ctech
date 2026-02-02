@@ -61,9 +61,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Configurar eventos
     setupEventListeners(product);
     
-    // Actualizar contador del carrito
-    cartManager.updateCartCounter();
-    
   } catch (error) {
     console.error('Error cargando producto:', error);
     
@@ -113,9 +110,8 @@ function setupGallery(product) {
       
       // Cambiar imagen principal
       if (images[index]) {
-        mainImage.style.backgroundImage = `url('${images[index]}')`;
-        mainImage.style.backgroundSize = 'cover';
-        mainImage.style.backgroundPosition = 'center';
+        mainImage.style.setProperty('--main-image', `url('${images[index]}')`);
+        mainImage.style.background = '#fff';
         mainImage.textContent = '';
       }
     });
@@ -124,19 +120,23 @@ function setupGallery(product) {
 
 function setupEventListeners(product) {
   // Botón comprar por WhatsApp
-  const buyBtn = document.getElementById('add-to-cart-detail');
-  if (buyBtn) {
-    buyBtn.addEventListener('click', function() {
-      cartManager.redirectToWhatsApp(product, CONFIG.whatsappNumber);
+  const whatsappBtn = document.getElementById('whatsapp-btn');
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', function() {
+      redirectToWhatsApp(product, CONFIG.whatsappNumber);
     });
   }
+}
+
+// Función para redirigir a WhatsApp
+function redirectToWhatsApp(product, whatsappNumber) {
+  const modeloStr = String(product.modelo || 'Producto');
+  const marcaStr = String(product.marca || '');
+  const precio = CONFIG.defaultCurrency === 'usd' ? product.contado_usd : product.contado_ars;
+  const precioFormateado = precio ? precio.toLocaleString('es-AR') : 'Consultar';
+  const moneda = CONFIG.defaultCurrency === 'usd' ? 'USD' : 'ARS';
   
-  // Botón agregar al carrito (wishlist)
-  const wishlistBtn = document.getElementById('add-to-cart-wishlist');
-  if (wishlistBtn) {
-    wishlistBtn.addEventListener('click', function() {
-      cartManager.addProduct(product.id, 1);
-      alert('Producto agregado al carrito');
-    });
-  }
+  const mensaje = `Hola! Me interesa el ${marcaStr} ${modeloStr}. Precio: $${precioFormateado} ${moneda}`;
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
 }

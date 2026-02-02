@@ -85,9 +85,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Agregar event listeners
     setupEventListeners();
     
-    // Actualizar contador del carrito
-    cartManager.updateCartCounter();
-    
   } catch (error) {
     console.error('Error cargando productos:', error);
     
@@ -224,7 +221,19 @@ function renderMarcaView(marca, products) {
 
 // Renderizar slider de una marca
 function renderMarcaSlider(marca, productos) {
-  const productosHtml = productos.map(product => {
+  // Ordenar productos por precio de mayor a menor
+  const productosOrdenados = [...productos].sort((a, b) => {
+    // Usar el precio según la moneda configurada
+    const precioA = CONFIG.defaultCurrency === 'usd' 
+      ? (a.contado_usd || 0) 
+      : (a.contado_ars || 0);
+    const precioB = CONFIG.defaultCurrency === 'usd' 
+      ? (b.contado_usd || 0) 
+      : (b.contado_ars || 0);
+    return precioB - precioA; // Orden descendente (mayor a menor)
+  });
+  
+  const productosHtml = productosOrdenados.map(product => {
     const image = productRenderer.getMainImage(product);
     const modeloStr = String(product.modelo || 'Producto');
     const marcaStr = String(product.marca || '');

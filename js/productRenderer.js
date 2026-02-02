@@ -70,10 +70,6 @@ class ProductRenderer {
           ${product.memoria_interna ? `<span class="product-tag">${product.memoria_interna}GB</span>` : ''}
           ${product.tamano_pantalla ? `<span class="product-tag">${product.tamano_pantalla}"</span>` : ''}
         </div>
-        <div class="product-cta-row">
-          <button type="button" class="btn-cart" data-product-id="${product.id}">Agregar</button>
-          <button class="btn-wishlist">❤</button>
-        </div>
       </article>
     `;
   }
@@ -88,9 +84,14 @@ class ProductRenderer {
       ? null 
       : (product.cuotas_12 ? `Desde $${Math.round(product.cuotas_12 / 12).toLocaleString('es-AR')} / mes` : null);
     
-    const mainImageStyle = mainImage 
-      ? `background-image: url('${mainImage}'); background-size: cover; background-position: center;`
-      : 'background: linear-gradient(135deg, #ff9ec0, #ffdbe6);';
+    // Estilo para la imagen principal con margen blanco
+    let mainImageStyle = '';
+    if (mainImage) {
+      // Usar CSS variable para la imagen y aplicar margen blanco con padding
+      mainImageStyle = `--main-image: url('${mainImage}'); background: #fff;`;
+    } else {
+      mainImageStyle = 'background: linear-gradient(135deg, #ff9ec0, #ffdbe6);';
+    }
     
     let galleryThumbs = '';
     images.forEach((img, index) => {
@@ -159,7 +160,7 @@ class ProductRenderer {
             </div>
           </div>
           <div class="product-actions">
-            <button class="btn-primary" id="add-to-cart-detail" data-product-id="${product.id}">
+            <button class="btn-primary" id="whatsapp-btn" data-product-id="${product.id}">
               Comprar por WhatsApp
             </button>
           </div>
@@ -260,40 +261,6 @@ class ProductRenderer {
     return parts.join(', ') || 'características destacadas';
   }
 
-  // Renderizar item del carrito
-  renderCartItem(product) {
-    const image = this.getMainImage(product);
-    const price = CONFIG.defaultCurrency === 'usd' ? product.contado_usd : product.contado_ars;
-    const imageStyle = image 
-      ? `background-image: url('${image}'); background-size: cover; background-position: center;`
-      : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
-    
-    return `
-      <div class="cart-item" data-product-id="${product.id}">
-        <div class="cart-item-image" style="${imageStyle}">
-          ${!image ? product.modelo : ''}
-        </div>
-        <div>
-          <div class="cart-item-info-title">${product.modelo}</div>
-          <div class="cart-item-meta">
-            <strong>${product.marca}</strong>${product.memoria_interna ? ` · ${product.memoria_interna} GB` : ''}${product.ram ? ` · ${product.ram} GB RAM` : ''}
-          </div>
-          <div class="cart-item-tags">
-            ${product.ram ? `<span class="cart-tag">${product.ram}GB RAM</span>` : ''}
-            ${product.memoria_interna ? `<span class="cart-tag">${product.memoria_interna}GB</span>` : ''}
-          </div>
-        </div>
-        <div class="cart-item-actions">
-          <div class="cart-item-price">${this.formatPrice(price, CONFIG.defaultCurrency)}</div>
-          <div class="cart-item-qty">
-            Cantidad:
-            <span class="qty-pill">${product.quantity || 1}</span>
-          </div>
-          <span class="remove-link" data-product-id="${product.id}">Quitar</span>
-        </div>
-      </div>
-    `;
-  }
 }
 
 // Instancia global
