@@ -153,7 +153,7 @@ class ProductRenderer {
               <div class="option-list" style="flex-direction: column; align-items: flex-start; gap: 4px;">
                 <div class="price-row" style="font-size: 0.75rem; display: flex; align-items: center; gap: 8px;">
                   <span>Contado: ${this.formatPrice(product.contado_ars, 'ars')}</span>
-                  ${product.contado_ars ? `<button class="btn-copy-small" data-price="${product.contado_ars}" title="Copiar precio">📋</button>` : ''}
+                  ${product.contado_ars ? `<button class="btn-copy-small" data-price="${product.contado_ars}" title="Copiar precio"><i class="fas fa-copy"></i></button>` : ''}
                 </div>
                 ${product.cuotas_6 ? `<div style="font-size: 0.75rem;">6 cuotas: ${this.formatPrice(product.cuotas_6, 'ars')}</div>` : ''}
                 ${product.cuotas_12 ? `<div style="font-size: 0.75rem;">12 cuotas: ${this.formatPrice(product.cuotas_12, 'ars')}</div>` : ''}
@@ -166,7 +166,7 @@ class ProductRenderer {
               <div class="alias-value" id="store-alias" data-alias="chingatech.mp">
                 <span>chingatech.mp</span>
                 <button class="btn-copy" id="copy-alias-btn" title="Copiar alias">
-                  📋
+                  <i class="fas fa-copy"></i>
                 </button>
               </div>
             </div>

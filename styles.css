@@ -5,13 +5,36 @@
   padding: 0;
 }
 
+/* 
+========== TABLA DE COLORES ORIGINALES (PRESERVADOS) ==========
+| Elemento                    | Color Original    | Uso                    |
+|----------------------------|-------------------|------------------------|
+| Body Background            | #E0E0E0           | Fondo principal        |
+| Texto Principal            | #111              | Color de texto         |
+| --bg                       | #f4f3f0           | Fondo variable         |
+| --accent-yellow            | #ffd447           | Header/Nav             |
+| --accent-pink              | #ff6b97           | Badges, elementos      |
+| --accent-blue              | #3a86ff           | Botones primarios      |
+| --accent-green             | #8ac926           | Botones secundarios    |
+| --border-color             | #111111           | Bordes                 |
+| Fondo Cards                | #fff, #fffcee     | Tarjetas               |
+| Fondo Hero                 | #fff9e6           | Sección hero           |
+| Fondo Neo-card             | #fffbff           | Cards neobrutalistas   |
+| Gradiente Imágenes         | #e8f0ff, #c9d8ff  | Placeholder imágenes   |
+| Gradiente Categorías       | #ff9ec0, #ffdbe6  | Cards categorías       |
+| Scrollbar                  | #ccc, #999        | Scrollbar              |
+| Hover Blue                 | #1a6bff           | Hover botones          |
+| Texto Secundario           | #666, #888        | Texto secundario       |
+| Fondo Inputs               | #f5f5f5           | Inputs                  |
+===============================================================
+*/
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f4f3f0;
-  color: #111;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -24,23 +47,59 @@ img {
   display: block;
 }
 
-/* ---------- ESTILO NEOBRUTALISTA / VARIABLES ---------- */
+/* ---------- SISTEMA DE TEMAS / VARIABLES ---------- */
 :root {
-  --bg: #f4f3f0;
-  --accent-yellow: #ffd447;
-  --accent-pink: #ff6b97;
-  --accent-blue: #3a86ff;
-  --accent-green: #8ac926;
-  --border-color: #111111;
-  --shadow: 6px 6px 0 #111111;
+  /* Modo Light (por defecto) - Neobrutalista vibrante */
+  --text-color: #1a1a1a;
+  --bg-color: #fff5e6;
+  --primary-color: #ff6b35;
+  --secondary-color: #4ecdc4;
+  --accent-color: #ffe66d;
+  --accent-secondary: #95e1d3;
+  --border-color: #1a1a1a;
+  --shadow: 6px 6px 0 #1a1a1a;
   --radius: 18px;
+  
+  /* Colores adicionales */
+  --card-bg: #ffffff;
+  --card-bg-alt: #fff8f0;
+  --text-secondary: #666666;
+  --hover-primary: #ff4500;
+  --success-color: #4ecdc4;
+  --warning-color: #ffe66d;
+}
+
+[data-theme="dark"] {
+  /* Modo Dark - Neobrutalista oscuro con acentos vibrantes */
+  --text-color: #f5f5f5;
+  --bg-color: #0a0a0a;
+  --primary-color: #ff6b35;
+  --secondary-color: #4ecdc4;
+  --accent-color: #ffe66d;
+  --accent-secondary: #95e1d3;
+  --border-color: #f5f5f5;
+  --shadow: 6px 6px 0 #f5f5f5;
+  
+  /* Colores adicionales */
+  --card-bg: #1a1a1a;
+  --card-bg-alt: #0f0f0f;
+  --text-secondary: #b0b0b0;
+  --hover-primary: #ff8c5a;
+  --success-color: #4ecdc4;
+  --warning-color: #ffe66d;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
 .neo-card {
   border: 3px solid var(--border-color);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  background: #fffcee;
+  background: var(--card-bg-alt);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .chip {
@@ -48,12 +107,13 @@ img {
   align-items: center;
   padding: 4px 10px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .container {
@@ -65,9 +125,10 @@ img {
 
 /* ---------- HEADER / NAV ---------- */
 header {
-  border-bottom: 3px solid #111;
-  background: var(--accent-yellow);
-  box-shadow: 0 4px 0 #111;
+  border-bottom: 3px solid var(--border-color);
+  background: var(--primary-color);
+  box-shadow: 0 4px 0 var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav {
@@ -93,13 +154,14 @@ header {
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  border: 3px solid #111;
-  background: #fff;
+  border: 3px solid var(--border-color);
+  background: var(--card-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
   font-size: 0.9rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-links {
@@ -120,25 +182,42 @@ header {
 }
 
 .nav-link:hover {
-  border-color: #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 #111;
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  box-shadow: 3px 3px 0 var(--border-color);
   transform: translate(-2px, -2px);
 }
 
 .nav-cta {
-  background: #111;
-  color: #fff;
+  background: var(--border-color);
+  color: var(--bg-color);
   border-radius: 999px;
   padding: 7px 16px;
-  border: 2px solid #111;
-  box-shadow: 3px 3px 0 #111;
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-cta:hover {
-  background: #fff;
-  color: #111;
+  background: var(--card-bg);
+  color: var(--text-color);
   transform: translate(-2px, -2px);
+}
+
+#theme-toggle {
+  background: var(--card-bg);
+  padding: 8px;
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#theme-toggle .theme-icon {
+  color: var(--text-color);
+  font-size: 1.1rem;
+  display: block;
+  line-height: 1;
 }
 
 /* ---------- HERO (INDEX) ---------- */
@@ -152,8 +231,9 @@ header {
 
 .hero-left {
   padding: 20px;
-  background: #fff9e6;
+  background: var(--card-bg-alt);
   border-radius: var(--radius);
+  transition: background-color 0.3s ease;
 }
 
 .hero-tag {
@@ -187,8 +267,9 @@ header {
 .hero-benefit {
   padding: 4px 10px;
   border-radius: 12px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .hero-actions {
@@ -220,11 +301,12 @@ header {
 
 .hero-right {
   padding: 16px;
-  background: #fffbff;
+  background: var(--card-bg-alt);
   display: flex;
   flex-direction: column;
   gap: 12px;
   border-radius: var(--radius);
+  transition: background-color 0.3s ease;
 }
 
 .hero-phone-card {
@@ -233,8 +315,8 @@ header {
   gap: 14px;
   align-items: center;
   padding: 14px;
-  background: var(--accent-pink);
-  transition: opacity 0.3s ease-in-out;
+  background: var(--accent-color);
+  transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
 }
 
 .hero-phone-card.fade-out {
@@ -247,18 +329,19 @@ header {
 
 .phone-image-frame {
   border-radius: 16px;
-  border: 3px solid #111;
-  background: #fff;
+  border: 3px solid var(--border-color);
+  background: var(--card-bg);
   padding: 10px;
-  box-shadow: 4px 4px 0 #111;
+  box-shadow: 4px 4px 0 var(--border-color);
   position: relative;
   overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .phone-image-placeholder {
   border-radius: 14px;
-  border: 2px solid #111;
-  background: linear-gradient(135deg, #ff9ec0, #ffdbe6);
+  border: 2px solid var(--border-color);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--secondary-color));
   height: 180px;
   min-height: 180px;
   display: flex;
@@ -269,6 +352,7 @@ header {
   text-transform: uppercase;
   overflow: hidden;
   position: relative;
+  transition: border-color 0.3s ease;
 }
 
 .phone-image-placeholder img {
@@ -280,8 +364,8 @@ header {
   left: 0;
 }
   border-radius: 14px;
-  border: 2px solid #111;
-  background: linear-gradient(135deg, #ff9ec0, #ffdbe6);
+  border: 2px solid var(--border-color);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--secondary-color));
   height: 180px;
   display: flex;
   align-items: center;
@@ -289,20 +373,22 @@ header {
   font-weight: 900;
   font-size: 0.9rem;
   text-transform: uppercase;
+  transition: border-color 0.3s ease;
 }
 
 .phone-badge {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #111;
-  color: #fff;
+  background: var(--border-color);
+  color: var(--bg-color);
   padding: 3px 8px;
   border-radius: 999px;
   font-size: 0.7rem;
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.08em;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .phone-info {
@@ -342,10 +428,11 @@ header {
   margin-bottom: 2px;
   padding: 2px 6px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
   text-transform: uppercase;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .hero-mini-row {
@@ -357,10 +444,11 @@ header {
 
 .hero-mini-card {
   padding: 10px;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 14px;
-  border: 2px solid #111;
-  box-shadow: 3px 3px 0 #111;
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .hero-mini-title {
@@ -373,15 +461,15 @@ header {
 /* ---------- BOTONES GENÉRICOS ---------- */
 .btn-primary {
   border-radius: 999px;
-  border: 3px solid #111;
-  background: var(--accent-blue);
+  border: 3px solid var(--border-color);
+  background: var(--secondary-color);
   padding: 10px 18px;
-  color: #fff;
+  color: var(--card-bg);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.8rem;
-  box-shadow: 4px 4px 0 #111;
+  box-shadow: 4px 4px 0 var(--border-color);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -392,14 +480,14 @@ header {
 
 .btn-primary:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 6px 6px 0 #111;
-  background: #1a6bff;
+  box-shadow: 6px 6px 0 var(--border-color);
+  background: var(--hover-primary);
 }
 
 .btn-ghost {
   border-radius: 999px;
-  border: 3px dashed #111;
-  background: #fff;
+  border: 3px dashed var(--border-color);
+  background: var(--card-bg);
   padding: 9px 12px;
   font-weight: 800;
   text-transform: uppercase;
@@ -410,6 +498,7 @@ header {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* ---------- BUSCADOR Y FILTROS COMPARTIDOS ---------- */
@@ -431,13 +520,15 @@ header {
 
 .search input {
   flex: 1;
-  border: 3px solid #111;
+  border: 3px solid var(--border-color);
   border-radius: 999px;
   padding: 9px 12px;
   font-size: 0.85rem;
-  background: #fff;
-  box-shadow: 3px 3px 0 #111;
+  background: var(--card-bg);
+  box-shadow: 3px 3px 0 var(--border-color);
   outline: none;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .search input::placeholder {
@@ -448,20 +539,22 @@ header {
 
 .search button {
   border-radius: 999px;
-  border: 3px solid #111;
-  background: var(--accent-green);
+  border: 3px solid var(--border-color);
+  background: var(--secondary-color);
   padding: 0 14px;
   font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
   cursor: pointer;
+  color: var(--text-color);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
 }
 
 .search button:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 #111;
+  box-shadow: 5px 5px 0 var(--border-color);
 }
 
 .filters {
@@ -474,17 +567,18 @@ header {
 .filter-chip {
   padding: 5px 10px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .filter-chip.is-active {
-  background: var(--accent-blue);
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--card-bg);
 }
 
 /* ---------- SECCIONES Y CATEGORÍAS (INDEX / DETAIL) ---------- */
@@ -512,8 +606,9 @@ header {
   width: 12px;
   height: 12px;
   border-radius: 4px;
-  border: 2px solid #111;
-  background: var(--accent-pink);
+  border: 2px solid var(--border-color);
+  background: var(--secondary-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .section-sub {
@@ -532,14 +627,15 @@ header {
 .category-card {
   padding: 10px;
   border-radius: 16px;
-  border: 2px solid #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 #111;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: 3px 3px 0 var(--border-color);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 4px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .category-name {
@@ -561,15 +657,16 @@ header {
 
 .product-card {
   padding: 10px;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 18px;
-  border: 3px solid #111;
-  box-shadow: 4px 4px 0 #111;
+  border: 3px solid var(--border-color);
+  box-shadow: 4px 4px 0 var(--border-color);
   display: flex;
   flex-direction: column;
   gap: 8px;
   position: relative;
   overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .product-card.product-linkable {
@@ -580,20 +677,21 @@ header {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: #111;
-  color: #fff;
+  background: var(--border-color);
+  color: var(--bg-color);
   padding: 3px 8px;
   border-radius: 999px;
   font-size: 0.65rem;
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.08em;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .product-image {
   border-radius: 14px;
-  border: 2px solid #111;
-  background: linear-gradient(135deg, #e8f0ff, #c9d8ff);
+  border: 2px solid var(--border-color);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--secondary-color));
   height: 130px;
   display: flex;
   align-items: center;
@@ -604,7 +702,8 @@ header {
   overflow: hidden;
   position: relative;
   padding: 8px;
-  background-color: #fff !important;
+  background-color: var(--card-bg) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .product-image[style*="--product-image"]::before {
@@ -671,8 +770,8 @@ header {
 .product-tag {
   padding: 2px 6px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -686,35 +785,35 @@ header {
 .btn-cart {
   flex: 1;
   border-radius: 999px;
-  border: 3px solid #111;
+  border: 3px solid var(--border-color);
   background: var(--accent-yellow);
   padding: 7px 0;
   font-size: 0.75rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
   cursor: pointer;
   text-align: center;
 }
 
 .btn-cart:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 #111;
+  box-shadow: 5px 5px 0 var(--border-color);
 }
 
 .btn-wishlist {
   width: 38px;
   height: 34px;
   border-radius: 999px;
-  border: 3px solid #111;
-  background: #fff;
+  border: 3px solid var(--border-color);
+  background: var(--card-bg);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   cursor: pointer;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
 }
 
 /* ---------- PRODUCT DETAIL (productDetail.html) ---------- */
@@ -731,9 +830,10 @@ header {
 .breadcrumbs a {
   padding: 2px 8px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .breadcrumbs span {
@@ -748,14 +848,15 @@ header {
 }
 
 .gallery-card {
-  background: #fffbff;
+  background: var(--card-bg-alt);
   padding: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .gallery-main {
   border-radius: 18px;
-  border: 3px solid #111;
-  background: linear-gradient(135deg, #ff9ec0, #ffdbe6);
+  border: 3px solid var(--border-color);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--secondary-color));
   height: 320px;
   display: flex;
   align-items: center;
@@ -764,11 +865,12 @@ header {
   font-size: 1rem;
   text-transform: uppercase;
   position: relative;
-  box-shadow: 4px 4px 0 #111;
+  box-shadow: 4px 4px 0 var(--border-color);
   margin-bottom: 10px;
   padding: 20px;
-  background-color: #fff !important;
+  background-color: var(--card-bg) !important;
   overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .gallery-main[style*="--main-image"]::before {
@@ -795,26 +897,28 @@ header {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #111;
-  color: #fff;
+  background: var(--border-color);
+  color: var(--bg-color);
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 0.7rem;
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: 0.08em;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .gallery-label {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 999px;
-  border: 2px solid #111;
+  border: 2px solid var(--border-color);
   padding: 4px 10px;
   font-size: 0.7rem;
   font-weight: 700;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .gallery-thumbs {
@@ -826,18 +930,19 @@ header {
 
 .thumb {
   border-radius: 12px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
   text-transform: uppercase;
   font-weight: 700;
   padding: 6px;
   overflow: hidden;
   position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .thumb[style*="--thumb-image"]::before {
@@ -860,16 +965,18 @@ header {
 }
 
 .thumb.is-active {
-  background: #ff6b97;
-  color: #fff;
+  background: var(--secondary-color);
+  color: var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .product-info-card {
-  background: #fff9e6;
+  background: var(--card-bg-alt);
   padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transition: background-color 0.3s ease;
 }
 
 .product-label-row {
@@ -883,8 +990,8 @@ header {
 .product-brand-chip {
   padding: 3px 10px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 800;
@@ -958,9 +1065,9 @@ header {
 .option-block {
   padding: 10px;
   border-radius: 14px;
-  border: 2px solid #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 #111;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: 3px 3px 0 var(--border-color);
   font-size: 0.8rem;
 }
 
@@ -981,8 +1088,8 @@ header {
 .pill {
   padding: 4px 9px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -990,8 +1097,8 @@ header {
 }
 
 .pill.is-active {
-  background: var(--accent-blue);
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--card-bg);
 }
 
 .product-actions-detail {
@@ -1018,7 +1125,7 @@ header {
 .alias-label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -1028,8 +1135,8 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: #f5f5f5;
-  border: 2px solid #111;
+  background: var(--card-bg-alt);
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-weight: 700;
   font-size: 1rem;
@@ -1043,35 +1150,52 @@ header {
 .btn-copy {
   background: transparent;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--text-color);
+}
+
+.btn-copy i {
+  display: block;
+  line-height: 1;
 }
 
 .btn-copy:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--accent-color);
+  color: var(--border-color);
+  transform: scale(1.1);
 }
 
 .btn-copy-small {
   background: transparent;
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   cursor: pointer;
   padding: 2px 6px;
   border-radius: 4px;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--text-color);
+}
+
+.btn-copy-small i {
+  display: block;
+  line-height: 1;
+  font-size: 0.75rem;
 }
 
 .btn-copy-small:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--accent-color);
+  color: var(--border-color);
+  transform: scale(1.1);
 }
 
 .price-row {
@@ -1091,8 +1215,8 @@ header {
 .meta-item {
   padding: 3px 8px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1105,7 +1229,7 @@ header {
 }
 
 .specs-card {
-  background: #fff;
+  background: var(--card-bg);
   padding: 16px;
 }
 
@@ -1119,8 +1243,9 @@ header {
 .spec-item {
   padding: 8px 10px;
   border-radius: 12px;
-  border: 2px solid #111;
-  background: #fffcee;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg-alt);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .spec-label {
@@ -1136,7 +1261,7 @@ header {
 }
 
 .description-card {
-  background: #fff;
+  background: var(--card-bg);
   padding: 16px;
   font-size: 0.85rem;
   line-height: 1.5;
@@ -1164,16 +1289,18 @@ header {
 }
 
 .cart-list-card {
-  background: #fffbff;
+  background: var(--card-bg-alt);
   padding: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .cart-summary-card {
-  background: #fff9e6;
+  background: var(--card-bg-alt);
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transition: background-color 0.3s ease;
 }
 
 .cart-items {
@@ -1189,16 +1316,16 @@ header {
   align-items: center;
   padding: 10px;
   border-radius: 16px;
-  border: 2px solid #111;
-  background: #fff;
-  box-shadow: 3px 3px 0 #111;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: 3px 3px 0 var(--border-color);
   font-size: 0.8rem;
 }
 
 .cart-item-image {
   border-radius: 12px;
-  border: 2px solid #111;
-  background: linear-gradient(135deg, #e8f0ff, #c9d8ff);
+  border: 2px solid var(--border-color);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--secondary-color));
   height: 70px;
   display: flex;
   align-items: center;
@@ -1206,6 +1333,7 @@ header {
   font-size: 0.65rem;
   font-weight: 800;
   text-transform: uppercase;
+  transition: border-color 0.3s ease;
 }
 
 .cart-item-info-title {
@@ -1235,8 +1363,8 @@ header {
 .cart-tag {
   padding: 2px 6px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1263,8 +1391,8 @@ header {
 .qty-pill {
   padding: 2px 8px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
 }
 
@@ -1310,8 +1438,8 @@ header {
 .summary-pill {
   padding: 3px 8px;
   border-radius: 999px;
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -1352,9 +1480,10 @@ header {
 
 /* ---------- FOOTER ---------- */
 footer {
-  border-top: 3px solid #111;
-  background: #fff;
+  border-top: 3px solid var(--border-color);
+  background: var(--card-bg);
   margin-top: 24px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .footer-inner {
@@ -1484,13 +1613,13 @@ footer {
 .marca-slider-title {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #111;
+  color: var(--text-color);
   margin: 0;
 }
 
 .marca-slider-count {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -1508,7 +1637,7 @@ footer {
   overflow-y: hidden;
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
+  scrollbar-color: var(--text-secondary) transparent;
   padding: 4px 0;
   flex: 1;
   -webkit-overflow-scrolling: touch;
@@ -1553,8 +1682,8 @@ footer {
 }
 
 .btn-ver-mas {
-  background: #fff;
-  border: 3px solid #111;
+  background: var(--card-bg);
+  border: 3px solid var(--border-color);
   border-radius: 8px;
   padding: 12px 24px;
   font-weight: 700;
@@ -1562,18 +1691,18 @@ footer {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
 }
 
 .btn-ver-mas:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 #111;
-  background: #f5f5f5;
+  box-shadow: 5px 5px 0 var(--border-color);
+  background: var(--card-bg-alt);
 }
 
 .btn-ver-mas:active {
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0 #111;
+  box-shadow: 2px 2px 0 var(--border-color);
 }
 
 /* En escritorio: mostrar sliders como grid sin flechas (solo en vista "todos") */
@@ -1603,14 +1732,14 @@ footer {
   .marca-filtered .slider-product-card {
     min-width: unset;
     max-width: unset;
-    width: 100%;
+    width: 18%;
   }
   
   /* En mobile, cuando se filtra por marca, mantener lista vertical */
   .marca-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   
   .marca-list-item {
@@ -1658,20 +1787,20 @@ footer {
 }
 
 .marca-slider::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--text-secondary);
   border-radius: 3px;
 }
 
 .marca-slider::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: var(--text-color);
 }
 
 .slider-nav {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 3px solid #111;
-  background: #fff;
+  border: 3px solid var(--border-color);
+  background: var(--card-bg);
   font-size: 24px;
   font-weight: 800;
   cursor: pointer;
@@ -1680,17 +1809,17 @@ footer {
   justify-content: center;
   flex-shrink: 0;
   transition: all 0.2s;
-  box-shadow: 3px 3px 0 #111;
+  box-shadow: 3px 3px 0 var(--border-color);
 }
 
 .slider-nav:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0 #111;
+  box-shadow: 5px 5px 0 var(--border-color);
 }
 
 .slider-nav:active {
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0 #111;
+  box-shadow: 2px 2px 0 var(--border-color);
 }
 
 .slider-nav:disabled,
@@ -1703,10 +1832,10 @@ footer {
   min-width: 200px;
   max-width: 200px;
   padding: 12px;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 18px;
-  border: 3px solid #111;
-  box-shadow: 4px 4px 0 #111;
+  border: 3px solid var(--border-color);
+  box-shadow: 4px 4px 0 var(--border-color);
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
@@ -1716,15 +1845,15 @@ footer {
 
 .slider-product-card:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 #111;
+  box-shadow: 6px 6px 0 var(--border-color);
 }
 
 .slider-product-image {
   width: 100%;
   height: 160px;
   border-radius: 14px;
-  border: 2px solid #111;
-  background: linear-gradient(135deg, #e8f0ff, #c9d8ff);
+  border: 2px solid var(--border-color);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--secondary-color));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1734,7 +1863,8 @@ footer {
   overflow: hidden;
   position: relative;
   padding: 8px;
-  background-color: #fff !important;
+  background-color: var(--card-bg) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .slider-product-image[style*="--slider-image"]::before {
@@ -1761,13 +1891,13 @@ footer {
 .slider-product-name {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #111;
+  color: var(--text-color);
   line-height: 1.2;
 }
 
 .slider-product-brand {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1775,7 +1905,7 @@ footer {
 
 .slider-product-specs {
   font-size: 0.7rem;
-  color: #888;
+  color: var(--text-secondary);
   font-weight: 500;
   margin-top: 4px;
 }

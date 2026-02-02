@@ -34,6 +34,8 @@
   />
 
   <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <!-- Scripts para Google Sheets y funcionalidad -->
   <script src="js/config.js"></script>
@@ -52,6 +54,9 @@
       <div class="nav-links">
         <a href="products.html" class="nav-link">Ofertas</a>
         <a href="products.html" class="nav-link">Marcas</a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">
+          <i class="fas fa-moon theme-icon"></i>
+        </button>
         <!--<a href="cart.html" class="nav-link nav-cta">Mi carrito (0)</a>-->
       </div>
     </nav>
@@ -106,6 +111,7 @@
     </div>
   </footer>
   
+  <script src="js/theme.js"></script>
   <script src="js/products.js"></script>
 </body>
 </html>
