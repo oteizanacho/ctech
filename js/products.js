@@ -238,13 +238,13 @@ function renderMarcaSlider(marca, productos) {
     const modeloStr = String(product.modelo || 'Producto');
     const marcaStr = String(product.marca || '');
     
-    const imageHtml = image 
-      ? `<img src="${image}" alt="${modeloStr}" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e8f0ff, #c9d8ff)';" style="width: 100%; height: 100%; object-fit: cover;" />`
-      : '';
-    
-    const imageStyle = image 
-      ? `background-image: url('${image}'); background-size: cover; background-position: center;`
-      : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
+    // Usar CSS variable para la imagen con margen blanco
+    let imageStyle = '';
+    if (image) {
+      imageStyle = `--slider-image: url('${image}'); background: #fff;`;
+    } else {
+      imageStyle = 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
+    }
     
     // Resumen del producto (sin precio)
     const specs = [];
@@ -256,7 +256,7 @@ function renderMarcaSlider(marca, productos) {
     return `
       <div class="slider-product-card" data-product-id="${product.id}">
         <div class="slider-product-image" style="${imageStyle}">
-          ${imageHtml || modeloStr}
+          ${!image ? modeloStr : ''}
         </div>
         <div class="slider-product-info">
           <div class="slider-product-name">${modeloStr}</div>

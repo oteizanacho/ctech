@@ -39,23 +39,18 @@ class ProductRenderer {
     // Asegurar que modelo sea string
     const modeloStr = String(product.modelo || 'Producto');
     
-    // Renderizar imagen - usar tag img si hay URL válida, sino usar background
-    let imageHtml = '';
+    // Renderizar imagen con margen blanco
+    let imageStyle = '';
     if (image) {
-      // Escapar comillas simples para el atributo onerror
-      const modeloEscaped = modeloStr.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-      // Usar tag img para mejor compatibilidad y manejo de errores
-      imageHtml = `<img src="${image}" alt="${modeloStr}" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e8f0ff, #c9d8ff)'; this.parentElement.innerHTML='${modeloEscaped}'" style="width: 100%; height: 100%; object-fit: cover;" />`;
+      imageStyle = `--product-image: url('${image}'); background: #fff;`;
+    } else {
+      imageStyle = 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
     }
-    
-    const imageStyle = image 
-      ? `background-image: url('${image}'); background-size: cover; background-position: center;`
-      : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
     
     return `
       <article class="product-card" data-product-id="${product.id}">
         <div class="product-image" style="${imageStyle}">
-          ${imageHtml || (!image ? modeloStr : '')}
+          ${!image ? modeloStr : ''}
         </div>
         <div class="product-name">${modeloStr}</div>
         <div class="product-brand">${String(product.marca || '')}</div>
@@ -96,8 +91,11 @@ class ProductRenderer {
     let galleryThumbs = '';
     images.forEach((img, index) => {
       const isActive = index === 0 ? 'is-active' : '';
+      const thumbStyle = img 
+        ? `--thumb-image: url('${img}'); background: #fff;`
+        : '';
       galleryThumbs += `
-        <div class="thumb ${isActive}" data-image-index="${index}" style="background-image: url('${img}'); background-size: cover; background-position: center;">
+        <div class="thumb ${isActive}" data-image-index="${index}" style="${thumbStyle}">
           ${!img ? `Vista ${index + 1}` : ''}
         </div>
       `;

@@ -54,7 +54,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       return p;
     });
     
-    // Seleccionar 3 productos de diferentes marcas para el hero
+    // Extraer marcas únicas disponibles
+    const marcas = extractMarcas(products);
+    console.log('🏷️ [Index] Marcas encontradas:', marcas);
+    
+    // Generar botones de marcas dinámicamente
+    generateMarcaFilters(marcas);
+    
+    // Seleccionar 6 productos de Apple para el hero
     heroProducts = selectHeroProducts(products);
     console.log('📱 [Hero] Productos seleccionados para carrusel:', heroProducts);
     
@@ -128,29 +135,81 @@ function setupEventListeners() {
     });
   }
   
-  // Filtros
+  // Filtros de marca
   document.querySelectorAll('.filter-chip').forEach(function(chip) {
     chip.addEventListener('click', function() {
-      const filter = this.textContent.trim();
+      const marca = this.getAttribute('data-marca');
+      
       let url = 'products.html';
-      
-      if (filter === 'Gama alta') {
-        url += '?gama=alta';
-      } else if (filter === 'Gama media') {
-        url += '?gama=media';
-      } else if (filter === '+ 5G') {
-        url += '?search=5G';
-      } else if (filter === 'Ofertas') {
-        url += '?ofertas=true';
+      if (marca && marca !== 'todos') {
+        url += `?marca=${encodeURIComponent(marca)}`;
       }
       
-      if (filter !== 'Todos') {
-        window.location.href = url;
-      } else {
-        window.location.href = 'products.html';
-      }
+      window.location.href = url;
     });
   });
+}
+
+// Extraer marcas únicas de los productos
+function extractMarcas(products) {
+  const marcasSet = new Set();
+  
+  products.forEach(product => {
+    const marca = product.marca;
+    if (marca && marca.trim() !== '') {
+      marcasSet.add(marca.trim());
+    }
+  });
+  
+  // Ordenar: primero las marcas conocidas en orden, luego "Otros"
+  const marcasOrdenadas = [];
+  MARCAS_DISPONIBLES.forEach(marca => {
+    if (marcasSet.has(marca)) {
+      marcasOrdenadas.push(marca);
+      marcasSet.delete(marca);
+    }
+  });
+  
+  if (marcasSet.has('Otros')) {
+    marcasOrdenadas.push('Otros');
+    marcasSet.delete('Otros');
+  }
+  
+  // Agregar cualquier otra marca que no esté en la lista
+  Array.from(marcasSet).sort().forEach(marca => {
+    marcasOrdenadas.push(marca);
+  });
+  
+  return marcasOrdenadas;
+}
+
+// Generar botones de marcas dinámicamente
+function generateMarcaFilters(marcas) {
+  const filtersContainer = document.getElementById('filters-container');
+  if (!filtersContainer) return;
+  
+  // Limpiar filtros existentes
+  filtersContainer.innerHTML = '';
+  
+  // Agregar botón "Todos"
+  const todosBtn = document.createElement('button');
+  todosBtn.className = 'filter-chip is-active';
+  todosBtn.type = 'button';
+  todosBtn.setAttribute('data-marca', 'todos');
+  todosBtn.textContent = 'Todos';
+  filtersContainer.appendChild(todosBtn);
+  
+  // Agregar botones para cada marca
+  marcas.forEach(marca => {
+    const button = document.createElement('button');
+    button.className = 'filter-chip';
+    button.type = 'button';
+    button.setAttribute('data-marca', marca.toLowerCase().replace(/\s+/g, '-'));
+    button.textContent = marca;
+    filtersContainer.appendChild(button);
+  });
+  
+  console.log(`✅ [Index] ${marcas.length} botones de marca generados`);
 }
 
 // Seleccionar 6 productos de Apple para el hero
