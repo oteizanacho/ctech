@@ -121,7 +121,6 @@ class ProductRenderer {
         <article class="product-info-card neo-card">
           <div class="product-label-row">
             <span class="product-brand-chip">${product.marca}</span>
-            <span class="product-rating">4.9★ · 324 reseñas</span>
           </div>
           <div>
             <h1 class="product-name">${product.modelo}${product.memoria_interna ? ` · ${product.memoria_interna} GB` : ''}${product.ram ? ` · ${product.ram} GB RAM` : ''}</h1>
