@@ -150,6 +150,11 @@ header {
   font-size: 0.9rem;
 }
 
+/* En modo dark, el logo debe tener texto negro */
+[data-theme="dark"] .logo {
+  color: #000000;
+}
+
 .logo-mark {
   width: 32px;
   height: 32px;
@@ -179,6 +184,11 @@ header {
   border-radius: 999px;
   border: 2px solid transparent;
   transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease, border-color 0.1s ease;
+}
+
+/* En modo dark, los nav-links deben tener texto negro */
+[data-theme="dark"] .nav-link {
+  color: #000000;
 }
 
 .nav-link:hover {
@@ -583,6 +593,11 @@ header {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
+/* En modo dark, los filter-chips deben tener texto blanco */
+[data-theme="dark"] .filter-chip {
+  color: #ffffff;
+}
+
 .filter-chip.is-active {
   background: var(--primary-color);
   color: var(--card-bg);
@@ -655,6 +670,11 @@ header {
   font-size: 0.7rem;
 }
 
+/* En modo dark, el texto dentro de category-card debe ser negro */
+[data-theme="dark"] .category-card {
+  color: #000000;
+}
+
 /* ---------- PRODUCT GRID GENERAL (INDEX / PRODUCTS) ---------- */
 .products-grid {
   display: grid;
@@ -711,6 +731,11 @@ header {
   padding: 8px;
   background-color: var(--card-bg) !important;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* En modo dark, el fondo de las fotos de productos debe ser blanco */
+[data-theme="dark"] .product-image {
+  background-color: #ffffff !important;
 }
 
 .product-image[style*="--product-image"]::before {
@@ -878,6 +903,11 @@ header {
   background-color: var(--card-bg) !important;
   overflow: hidden;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* En modo dark, el fondo de la galería principal debe ser blanco */
+[data-theme="dark"] .gallery-main {
+  background-color: #ffffff !important;
 }
 
 .gallery-main[style*="--main-image"]::before {
@@ -1701,6 +1731,11 @@ footer {
   box-shadow: 3px 3px 0 var(--border-color);
 }
 
+/* En modo dark, el texto del botón "ver más" debe ser blanco */
+[data-theme="dark"] .btn-ver-mas {
+  color: #ffffff;
+}
+
 .btn-ver-mas:hover {
   transform: translate(-2px, -2px);
   box-shadow: 5px 5px 0 var(--border-color);
@@ -1872,6 +1907,11 @@ footer {
   padding: 8px;
   background-color: var(--card-bg) !important;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* En modo dark, el fondo de las fotos de productos en sliders debe ser blanco */
+[data-theme="dark"] .slider-product-image {
+  background-color: #ffffff !important;
 }
 
 .slider-product-image[style*="--slider-image"]::before {
