@@ -1,7 +1,15 @@
 // Script específico para index.html
 
+// Marcas disponibles
+const MARCAS_DISPONIBLES = ['Apple', 'Xiaomi', 'Samsung', 'Motorola', 'Sony', 'Nintendo'];
+
+let heroCarouselInterval = null;
+let currentHeroIndex = 0;
+let heroProducts = [];
+
 document.addEventListener('DOMContentLoaded', async () => {
   const productsGrid = document.getElementById('products-grid');
+  const heroPhoneCard = document.getElementById('hero-phone-card');
   
   // Mostrar estado de carga
   productsGrid.innerHTML = `
@@ -26,6 +34,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
       `;
       return;
+    }
+    
+    // Normalizar marcas de productos
+    products = products.map(p => {
+      if (!p.marca || p.marca.trim() === '') {
+        p.marca = 'Otros';
+      } else {
+        const marcaLower = p.marca.trim();
+        const marcaNormalizada = MARCAS_DISPONIBLES.find(m => 
+          m.toLowerCase() === marcaLower.toLowerCase()
+        );
+        if (marcaNormalizada) {
+          p.marca = marcaNormalizada;
+        } else {
+          p.marca = 'Otros';
+        }
+      }
+      return p;
+    });
+    
+    // Seleccionar 3 productos de diferentes marcas para el hero
+    heroProducts = selectHeroProducts(products);
+    console.log('📱 [Hero] Productos seleccionados para carrusel:', heroProducts);
+    
+    // Inicializar carrusel del hero
+    if (heroProducts.length > 0) {
+      renderHeroProduct(heroProducts[0]);
+      startHeroCarousel();
     }
     
     // Mostrar los primeros 8 productos destacados
@@ -115,4 +151,118 @@ function setupEventListeners() {
       }
     });
   });
+}
+
+// Seleccionar 6 productos de Apple para el hero
+function selectHeroProducts(products) {
+  // Filtrar solo productos de Apple
+  const appleProducts = products.filter(p => {
+    const marca = p.marca || '';
+    return marca.toLowerCase() === 'apple';
+  });
+  
+  // Ordenar productos por precio (mayor a menor)
+  const sortedProducts = [...appleProducts].sort((a, b) => {
+    const precioA = CONFIG.defaultCurrency === 'usd' ? (a.contado_usd || 0) : (a.contado_ars || 0);
+    const precioB = CONFIG.defaultCurrency === 'usd' ? (b.contado_usd || 0) : (b.contado_ars || 0);
+    return precioB - precioA;
+  });
+  
+  // Seleccionar los primeros 6 productos de Apple
+  const selectedProducts = sortedProducts.slice(0, 6);
+  
+  console.log(`🍎 [Hero] Productos Apple encontrados: ${appleProducts.length}, seleccionados: ${selectedProducts.length}`);
+  
+  return selectedProducts;
+}
+
+// Renderizar producto en el hero
+function renderHeroProduct(product, withTransition = false) {
+  const heroPhoneCard = document.getElementById('hero-phone-card');
+  if (!heroPhoneCard) return;
+  
+  // Aplicar transición si se solicita
+  if (withTransition) {
+    heroPhoneCard.classList.add('fade-out');
+    setTimeout(() => {
+      updateHeroContent(product);
+      heroPhoneCard.classList.remove('fade-out');
+      heroPhoneCard.classList.add('fade-in');
+      setTimeout(() => {
+        heroPhoneCard.classList.remove('fade-in');
+      }, 300);
+    }, 150);
+  } else {
+    updateHeroContent(product);
+  }
+}
+
+// Actualizar contenido del hero
+function updateHeroContent(product) {
+  const heroPhoneCard = document.getElementById('hero-phone-card');
+  if (!heroPhoneCard) return;
+  
+  const image = productRenderer.getMainImage(product);
+  const modeloStr = String(product.modelo || 'Producto');
+  const marcaStr = String(product.marca || '');
+  const price = CONFIG.defaultCurrency === 'usd' ? product.contado_usd : product.contado_ars;
+  
+  // Construir tagline con especificaciones
+  const specs = [];
+  if (product.tamano_pantalla) specs.push(`Pantalla ${product.tamano_pantalla}"`);
+  if (product.camara_principal) specs.push(`Cámara ${product.camara_principal}MP`);
+  if (product.bateria_capacidad) specs.push(`Batería ${product.bateria_capacidad}mAh`);
+  const tagline = specs.length > 0 ? specs.join(' · ') : 'Especificaciones destacadas';
+  
+  // Especificaciones para mostrar
+  const displaySpecs = [];
+  if (product.memoria_interna) displaySpecs.push(`${product.memoria_interna} GB`);
+  if (product.ram) displaySpecs.push(`${product.ram} GB RAM`);
+  if (product.tamano_pantalla) displaySpecs.push(`${product.tamano_pantalla}"`);
+  
+  const imageStyle = image 
+    ? `background-image: url('${image}'); background-size: cover; background-position: center;`
+    : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
+  
+  heroPhoneCard.innerHTML = `
+    <div class="phone-image-frame">
+      <div class="phone-image-placeholder" style="${imageStyle}">
+        ${!image ? modeloStr : ''}
+      </div>
+    </div>
+    <div class="phone-info">
+      <div class="phone-name">${modeloStr}</div>
+      <div class="phone-tagline">${tagline}</div>
+      <div class="phone-price">${productRenderer.formatPrice(price, CONFIG.defaultCurrency)}</div>
+      <div class="phone-specs">
+        ${displaySpecs.map(spec => `<span>${spec}</span>`).join('')}
+      </div>
+    </div>
+  `;
+  
+  // Hacer clickeable el hero card para ir al detalle
+  heroPhoneCard.style.cursor = 'pointer';
+  heroPhoneCard.onclick = () => {
+    window.location.href = `productDetail.html?id=${product.id}`;
+  };
+}
+
+// Iniciar carrusel automático del hero
+function startHeroCarousel() {
+  if (heroProducts.length <= 1) return;
+  
+  // Cambiar producto cada 5 segundos con transición
+  heroCarouselInterval = setInterval(() => {
+    currentHeroIndex = (currentHeroIndex + 1) % heroProducts.length;
+    renderHeroProduct(heroProducts[currentHeroIndex], true); // Con transición
+    console.log(`🔄 [Hero] Cambiando a producto ${currentHeroIndex + 1}/${heroProducts.length}: ${heroProducts[currentHeroIndex].modelo}`);
+  }, 5000); // 5 segundos
+}
+
+// Detener carrusel (útil si se necesita)
+function stopHeroCarousel() {
+  if (heroCarouselInterval) {
+    clearInterval(heroCarouselInterval);
+    heroCarouselInterval = null;
+  }
 }

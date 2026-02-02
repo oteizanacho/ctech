@@ -234,6 +234,15 @@ header {
   align-items: center;
   padding: 14px;
   background: var(--accent-pink);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hero-phone-card.fade-out {
+  opacity: 0.5;
+}
+
+.hero-phone-card.fade-in {
+  opacity: 1;
 }
 
 .phone-image-frame {
@@ -247,6 +256,29 @@ header {
 }
 
 .phone-image-placeholder {
+  border-radius: 14px;
+  border: 2px solid #111;
+  background: linear-gradient(135deg, #ff9ec0, #ffdbe6);
+  height: 180px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  overflow: hidden;
+  position: relative;
+}
+
+.phone-image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
   border-radius: 14px;
   border: 2px solid #111;
   background: linear-gradient(135deg, #ff9ec0, #ffdbe6);
