@@ -30,8 +30,6 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   let pathname = parsedUrl.pathname;
 
-  console.log(`📥 [Server] ${req.method} ${pathname}`);
-
   // Manejar rutas de API
   if (pathname.startsWith('/api/')) {
     try {
@@ -127,11 +125,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log('');
-  console.log('🚀 Servidor de desarrollo iniciado!');
-  console.log(`📡 Disponible en: http://localhost:${PORT}`);
-  console.log(`📦 API disponible en: http://localhost:${PORT}/api/catalogo`);
-  console.log('');
-  console.log('💡 Presiona Ctrl+C para detener el servidor');
-  console.log('');
+  // Servidor iniciado
 });

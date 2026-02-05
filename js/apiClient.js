@@ -19,16 +19,7 @@ class ApiClient {
     try {
       this.loading = true;
       
-      console.log('🔍 [Frontend] Iniciando solicitud a:', `${this.baseUrl}/catalogo`);
-      console.log('🌐 [Frontend] URL base:', this.baseUrl);
-      
       const response = await fetch(`${this.baseUrl}/catalogo`);
-      
-      console.log('📡 [Frontend] Respuesta recibida:', {
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok
-      });
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -37,11 +28,6 @@ class ApiClient {
       }
       
       const data = await response.json();
-      console.log('✅ [Frontend] Datos recibidos:', {
-        success: data.success,
-        count: data.count,
-        productosLength: data.productos?.length || 0
-      });
       
       if (!data.success) {
         console.error('❌ [Frontend] Respuesta sin éxito:', data);
@@ -49,7 +35,6 @@ class ApiClient {
       }
       
       // Procesar productos para asegurar compatibilidad con el formato esperado
-      console.log('🔄 [Frontend] Procesando productos...');
       const productos = (data.productos || []).map(producto => {
         // Procesar fotos - verificar si ya viene procesado desde la API
         if (!producto.fotosArray) {
@@ -91,8 +76,6 @@ class ApiClient {
             // Si no es una URL válida, retornar null para que se filtre
             return null;
           }).filter(f => f !== null);
-          
-          console.log(`📸 [Frontend] Fotos procesadas para ${producto.modelo}:`, producto.fotosArray);
         }
         
         // Asegurar que los campos numéricos sean números
@@ -113,25 +96,6 @@ class ApiClient {
         
         return producto;
       });
-      
-      console.log('✅ [Frontend] Productos procesados:', productos.length);
-      
-      // Imprimir todos los productos en consola para verificación
-      console.log('📦 [Frontend] === LISTA COMPLETA DE PRODUCTOS ===');
-      productos.forEach((producto, index) => {
-        console.log(`\n📱 [Frontend] Producto ${index + 1}:`, {
-          id: producto.id,
-          modelo: producto.modelo,
-          marca: producto.marca,
-          precio_ars: producto.contado_ars,
-          precio_usd: producto.contado_usd,
-          ram: producto.ram,
-          memoria_interna: producto.memoria_interna,
-          fotos: producto.fotosArray,
-          completo: producto
-        });
-      });
-      console.log('📦 [Frontend] === FIN DE LISTA DE PRODUCTOS ===\n');
       
       return productos;
       

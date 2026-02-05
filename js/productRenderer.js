@@ -15,16 +15,12 @@ class ProductRenderer {
       const imageUrl = product.fotosArray[0].trim();
       // Validar que sea una URL válida
       if (imageUrl && (imageUrl.startsWith('http://') || imageUrl.startsWith('https://') || imageUrl.startsWith('//'))) {
-        const modeloStr = String(product.modelo || 'Producto');
-        console.log(`🖼️ [Renderer] Imagen encontrada para ${modeloStr}:`, imageUrl);
         return imageUrl;
       } else {
         const modeloStr = String(product.modelo || 'Producto');
         console.warn(`⚠️ [Renderer] URL de imagen inválida para ${modeloStr}:`, imageUrl);
       }
     }
-    const modeloStr = String(product.modelo || 'Producto');
-    console.log(`⚠️ [Renderer] No hay imágenes para ${modeloStr}`);
     return null;
   }
 

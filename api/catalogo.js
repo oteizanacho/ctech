@@ -21,8 +21,6 @@ module.exports = async (req, res) => {
   }
 
   try {
-    console.log('🔍 [API] Iniciando solicitud de catálogo...');
-    
     // Obtener variables de entorno
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -42,15 +40,8 @@ module.exports = async (req, res) => {
       });
     }
 
-    console.log('✅ [API] Variables de entorno encontradas');
-    console.log('📋 [API] Sheet ID:', sheetId);
-    console.log('📧 [API] Service Account Email:', clientEmail);
-
     // Inicializar la conexión con Google Sheets
-    console.log('🔌 [API] Conectando con Google Sheets...');
-    
     // En google-spreadsheet v4, se usa google-auth-library directamente
-    console.log('🔐 [API] Autenticando con Service Account...');
     const serviceAccountAuth = new JWT({
       email: clientEmail,
       key: privateKey,
@@ -64,9 +55,7 @@ module.exports = async (req, res) => {
     const doc = new GoogleSpreadsheet(sheetId, serviceAccountAuth);
 
     // Cargar información del documento
-    console.log('📥 [API] Cargando información del documento...');
     await doc.loadInfo();
-    console.log('✅ [API] Documento cargado:', doc.title);
 
     // Obtener la primera pestaña (hoja)
     const sheet = doc.sheetsByIndex[0];
@@ -78,20 +67,13 @@ module.exports = async (req, res) => {
       });
     }
 
-    console.log('📊 [API] Hoja encontrada:', sheet.title);
-    console.log('📏 [API] Número de hojas disponibles:', doc.sheetCount);
-
     // Cargar las filas de la hoja
-    console.log('📥 [API] Cargando filas de la hoja...');
     const rows = await sheet.getRows();
-    console.log('✅ [API] Filas cargadas:', rows.length);
     
     // Mostrar headers
     const headers = sheet.headerValues || [];
-    console.log('📋 [API] Headers encontrados:', headers);
 
     // Extraer los datos y formatearlos
-    console.log('🔄 [API] Procesando productos...');
     const productos = rows.map((row, index) => {
       const producto = {};
       
@@ -141,7 +123,6 @@ module.exports = async (req, res) => {
       for (const field of fotoFields) {
         if (producto[field]) {
           fotosString = producto[field];
-          console.log(`📸 [API] Fotos encontradas en campo "${field}":`, fotosString);
           break;
         }
       }
@@ -161,32 +142,17 @@ module.exports = async (req, res) => {
         }
         
         producto.fotosArray = fotosArray;
-        console.log(`📸 [API] Fotos procesadas para producto ${producto.id}:`, fotosArray);
       } else {
         producto.fotosArray = [];
-        console.log(`⚠️ [API] No se encontraron fotos para producto ${producto.id}`);
       }
 
       return producto;
     });
-    
-    // Log del primer producto para debug
-    if (productos.length > 0) {
-      console.log('📦 [API] Primer producto procesado:', JSON.stringify(productos[0], null, 2));
-    }
 
     // Filtrar productos vacíos (filas sin datos)
     const productosFiltrados = productos.filter(p => {
       // Considerar un producto válido si tiene al menos modelo o marca
       return p.modelo || p.marca || Object.values(p).some(v => v && v.toString().trim() !== '');
-    });
-
-    console.log('✅ [API] Productos procesados:', productos.length);
-    console.log('✅ [API] Productos válidos (filtrados):', productosFiltrados.length);
-    console.log('📊 [API] Resumen de productos:', {
-      total: productos.length,
-      validos: productosFiltrados.length,
-      eliminados: productos.length - productosFiltrados.length
     });
 
     // Retornar respuesta exitosa

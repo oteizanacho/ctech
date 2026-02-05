@@ -56,14 +56,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Extraer marcas únicas disponibles
     const marcas = extractMarcas(products);
-    console.log('🏷️ [Index] Marcas encontradas:', marcas);
     
     // Generar botones de marcas dinámicamente
     generateMarcaFilters(marcas);
     
     // Seleccionar 6 productos de Apple para el hero
     heroProducts = selectHeroProducts(products);
-    console.log('📱 [Hero] Productos seleccionados para carrusel:', heroProducts);
     
     // Inicializar carrusel del hero
     if (heroProducts.length > 0) {
@@ -208,8 +206,6 @@ function generateMarcaFilters(marcas) {
     button.textContent = marca;
     filtersContainer.appendChild(button);
   });
-  
-  console.log(`✅ [Index] ${marcas.length} botones de marca generados`);
 }
 
 // Seleccionar 6 productos de Apple para el hero
@@ -229,8 +225,6 @@ function selectHeroProducts(products) {
   
   // Seleccionar los primeros 6 productos de Apple
   const selectedProducts = sortedProducts.slice(0, 6);
-  
-  console.log(`🍎 [Hero] Productos Apple encontrados: ${appleProducts.length}, seleccionados: ${selectedProducts.length}`);
   
   return selectedProducts;
 }
@@ -314,7 +308,6 @@ function startHeroCarousel() {
   heroCarouselInterval = setInterval(() => {
     currentHeroIndex = (currentHeroIndex + 1) % heroProducts.length;
     renderHeroProduct(heroProducts[currentHeroIndex], true); // Con transición
-    console.log(`🔄 [Hero] Cambiando a producto ${currentHeroIndex + 1}/${heroProducts.length}: ${heroProducts[currentHeroIndex].modelo}`);
   }, 5000); // 5 segundos
 }
 

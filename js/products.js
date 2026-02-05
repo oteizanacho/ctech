@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Extraer marcas únicas disponibles
     const marcas = extractMarcas(products);
-    console.log('🏷️ [Products] Marcas encontradas:', marcas);
     
     // Generar botones de marcas dinámicamente
     generateMarcaFilters(marcas);
@@ -172,8 +171,6 @@ function generateMarcaFilters(marcas) {
     button.textContent = marca;
     filtersContainer.appendChild(button);
   });
-  
-  console.log(`✅ [Products] ${marcas.length} botones de marca generados`);
 }
 
 // Renderizar vista de todas las marcas (sliders por marca)
