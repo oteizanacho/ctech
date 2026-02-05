@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Obtener parámetros de URL
   const urlParams = new URLSearchParams(window.location.search);
   const marcaParam = urlParams.get('marca');
+  const categoriaParam = urlParams.get('categoria');
   
   // Cargar productos desde la API serverless
   let products = [];
@@ -53,6 +54,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       return p;
     });
+    
+    // Filtrar productos por categoría si existe el parámetro
+    if (categoriaParam) {
+      products = filterByCategory(products, categoriaParam);
+    }
+    
+    // Filtrar productos que no tienen precio
+    products = filterProductsWithPrice(products);
     
     // Extraer marcas únicas disponibles
     const marcas = extractMarcas(products);
@@ -112,6 +121,77 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
   }
 });
+
+// Verificar si un producto tiene precio
+function hasPrice(product) {
+  if (CONFIG.defaultCurrency === 'usd') {
+    return product.contado_usd && parseFloat(product.contado_usd) > 0;
+  } else {
+    return product.contado_ars && parseFloat(product.contado_ars) > 0;
+  }
+}
+
+// Filtrar productos que tienen precio
+function filterProductsWithPrice(products) {
+  return products.filter(product => hasPrice(product));
+}
+
+// Filtrar productos por categoría
+function filterByCategory(products, categoria) {
+  switch(categoria) {
+    case 'fotografia-pro':
+      // Mostrar todos los productos Apple con camara_principal >= 48
+      // Y del resto de productos, solo los que superen 51 en camara_principal
+      return products.filter(product => {
+        const camara = parseFloat(product.camara_principal) || 0;
+        const marca = (product.marca || '').toLowerCase();
+        
+        if (marca === 'apple') {
+          return camara >= 48;
+        } else {
+          return camara > 51;
+        }
+      });
+      
+    case 'gaming-mode':
+      // Productos que superen el valor 1400x2300 en resolucion
+      return products.filter(product => {
+        const resolucion = product.resolucion || '';
+        if (!resolucion) return false;
+        
+        // Parsear resolución (formato esperado: "1400x2300" o similar)
+        const match = resolucion.toString().match(/(\d+)\s*x\s*(\d+)/i);
+        if (!match) return false;
+        
+        const ancho = parseInt(match[1]);
+        const alto = parseInt(match[2]);
+        
+        // Comparar: debe superar 1400x2300 (comparar área total o ambos valores)
+        // Interpretamos "superar" como tener mayor área total
+        const areaProducto = ancho * alto;
+        const areaMinima = 1400 * 2300;
+        
+        return areaProducto > areaMinima;
+      });
+      
+    case 'bateria-infinita':
+      // Productos que superen el valor 5000 en bateria_capacidad
+      return products.filter(product => {
+        const bateria = parseFloat(product.bateria_capacidad) || 0;
+        return bateria > 5000;
+      });
+      
+    case 'compactos':
+      // Productos que tengan tamano_pantalla igual a 6.1
+      return products.filter(product => {
+        const tamano = parseFloat(product.tamano_pantalla) || 0;
+        return tamano === 6.1;
+      });
+      
+    default:
+      return products;
+  }
+}
 
 // Extraer marcas únicas de los productos
 function extractMarcas(products) {

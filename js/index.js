@@ -60,6 +60,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Generar botones de marcas dinámicamente
     generateMarcaFilters(marcas);
     
+    // Filtrar productos que no tienen precio
+    products = products.filter(product => {
+      if (CONFIG.defaultCurrency === 'usd') {
+        return product.contado_usd && parseFloat(product.contado_usd) > 0;
+      } else {
+        return product.contado_ars && parseFloat(product.contado_ars) > 0;
+      }
+    });
+    
     // Seleccionar 6 productos de Apple para el hero
     heroProducts = selectHeroProducts(products);
     
@@ -144,6 +153,31 @@ function setupEventListeners() {
       }
       
       window.location.href = url;
+    });
+  });
+  
+  // Event listeners para categorías
+  const categoryCards = document.querySelectorAll('.categories-row .category-card');
+  categoryCards.forEach((card, index) => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function() {
+      const categoryName = this.querySelector('.category-name')?.textContent.trim();
+      let categoryParam = '';
+      
+      // Mapear nombre de categoría a parámetro
+      if (categoryName === 'Fotografía Pro') {
+        categoryParam = 'fotografia-pro';
+      } else if (categoryName === 'Gaming Mode') {
+        categoryParam = 'gaming-mode';
+      } else if (categoryName === 'Batería infinita') {
+        categoryParam = 'bateria-infinita';
+      } else if (categoryName === 'Compactos') {
+        categoryParam = 'compactos';
+      }
+      
+      if (categoryParam) {
+        window.location.href = `products.html?categoria=${encodeURIComponent(categoryParam)}`;
+      }
     });
   });
 }
