@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Configurar eventos
     setupEventListeners(product);
     
+    // Configurar lightbox
+    setupLightbox(product);
+    
   } catch (error) {
     console.error('Error cargando producto:', error);
     
@@ -150,6 +153,125 @@ function setupEventListeners(product) {
       copyToClipboard(priceFormatted, 'Precio copiado al portapapeles');
     });
   }
+}
+
+// Configurar lightbox para la galería de imágenes
+function setupLightbox(product) {
+  const images = product.fotosArray || [];
+  if (images.length === 0) return;
+  
+  // Crear HTML del lightbox
+  const lightboxHTML = `
+    <div class="lightbox-overlay" id="lightbox-overlay">
+      <button class="lightbox-btn-close" id="lightbox-close" aria-label="Cerrar">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="lightbox-container">
+        <button class="lightbox-btn lightbox-btn-prev" id="lightbox-prev" aria-label="Imagen anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <img class="lightbox-image" id="lightbox-image" src="" alt="${product.modelo || 'Producto'}" />
+        <button class="lightbox-btn lightbox-btn-next" id="lightbox-next" aria-label="Imagen siguiente">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  
+  // Agregar lightbox al body
+  document.body.insertAdjacentHTML('beforeend', lightboxHTML);
+  
+  const overlay = document.getElementById('lightbox-overlay');
+  const lightboxImage = document.getElementById('lightbox-image');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  const mainGalleryImage = document.getElementById('main-gallery-image');
+  
+  let currentImageIndex = 0;
+  
+  // Función para abrir lightbox
+  function openLightbox(index) {
+    if (index < 0 || index >= images.length) return;
+    currentImageIndex = index;
+    lightboxImage.src = images[currentImageIndex];
+    overlay.classList.add('is-active');
+    document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+  }
+  
+  // Función para cerrar lightbox
+  function closeLightbox() {
+    overlay.classList.remove('is-active');
+    document.body.style.overflow = ''; // Restaurar scroll del body
+  }
+  
+  // Función para ir a la siguiente imagen
+  function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    lightboxImage.src = images[currentImageIndex];
+  }
+  
+  // Función para ir a la imagen anterior
+  function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    lightboxImage.src = images[currentImageIndex];
+  }
+  
+  // Event listeners
+  if (mainGalleryImage) {
+    mainGalleryImage.addEventListener('click', function() {
+      // Obtener el índice de la imagen actual
+      const activeThumb = document.querySelector('.thumb.is-active');
+      if (activeThumb) {
+        const index = parseInt(activeThumb.dataset.imageIndex) || 0;
+        openLightbox(index);
+      } else {
+        openLightbox(0);
+      }
+    });
+  }
+  
+  // También hacer clickeables las miniaturas
+  const thumbs = document.querySelectorAll('.gallery-thumbs .thumb');
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', function(e) {
+      // Si la miniatura tiene imagen, abrir lightbox
+      if (images[index]) {
+        e.stopPropagation(); // Evitar que también cambie la imagen principal
+        openLightbox(index);
+      }
+    });
+  });
+  
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', prevImage);
+  nextBtn.addEventListener('click', nextImage);
+  
+  // Cerrar al hacer clic en el overlay (fuera de la imagen)
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      closeLightbox();
+    }
+  });
+  
+  // Navegación con teclado
+  document.addEventListener('keydown', function(e) {
+    if (!overlay.classList.contains('is-active')) return;
+    
+    switch(e.key) {
+      case 'Escape':
+        closeLightbox();
+        break;
+      case 'ArrowLeft':
+        prevImage();
+        e.preventDefault();
+        break;
+      case 'ArrowRight':
+        nextImage();
+        e.preventDefault();
+        break;
+    }
+  });
 }
 
 // Función para copiar al portapapeles

@@ -903,6 +903,7 @@ header {
   background-color: var(--card-bg) !important;
   overflow: hidden;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
 }
 
 /* En modo dark, el fondo de la galería principal debe ser blanco */
@@ -2006,6 +2007,169 @@ footer {
 
   .product-actions-detail {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- LIGHTBOX PARA GALERÍA DE PRODUCTOS ---------- */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.lightbox-btn:active {
+  transform: scale(0.95);
+}
+
+.lightbox-btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10001;
+}
+
+.lightbox-btn-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.lightbox-btn-close:active {
+  transform: scale(0.95);
+}
+
+.lightbox-btn-prev,
+.lightbox-btn-next {
+  position: relative;
+}
+
+/* En modo dark, ajustar estilos del lightbox */
+[data-theme="dark"] .lightbox-overlay {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+[data-theme="dark"] .lightbox-image {
+  background: #ffffff;
+}
+
+/* Responsive: en móvil, botones más pequeños y ocultar en pantallas muy pequeñas */
+@media (max-width: 768px) {
+  .lightbox-container {
+    width: 95%;
+    gap: 10px;
+  }
+
+  .lightbox-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .lightbox-btn-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .lightbox-image {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-btn-prev,
+  .lightbox-btn-next {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .lightbox-btn-prev {
+    left: 10px;
+  }
+
+  .lightbox-btn-next {
+    right: 10px;
+  }
+
+  .lightbox-container {
+    gap: 0;
   }
 }
 
