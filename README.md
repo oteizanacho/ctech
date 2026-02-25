@@ -2,17 +2,22 @@
 
 Ecommerce dinámico de celulares conectado a Google Sheets con integración a WhatsApp usando arquitectura serverless (Vercel Functions).
 
+**Versión:** 1.0.0  
+**Estado:** ✅ Activo - Listo para producción  
+**Deployment:** Vercel (Serverless Functions)
+
 ## 📋 Características
 
 - ✅ Conexión con Google Sheets para datos de productos (Serverless API)
-- ✅ Arquitectura serverless sin servidor dedicado
-- ✅ Vista de catálogo dinámica
+- ✅ Arquitectura serverless sin servidor dedicado (Vercel Functions)
+- ✅ Vista de catálogo dinámica con filtros por marca
 - ✅ Detalle de producto con galería de imágenes
-- ✅ Carrito de compras con localStorage
-- ✅ Integración con WhatsApp para compras
-- ✅ Búsqueda y filtros de productos
+- ✅ Integración con WhatsApp para compras directas
+- ✅ Búsqueda y filtros de productos por marca
 - ✅ Diseño neobrutalista responsive
+- ✅ Tema claro/oscuro con persistencia en localStorage
 - ✅ Logs de depuración para verificar datos y conexión
+- ✅ Servidor de desarrollo local con Node.js
 
 ## 🚀 Inicio Rápido
 
@@ -130,46 +135,54 @@ Ejemplos:
 ```
 ctech/
 ├── api/
-│   └── catalogo.js         # Endpoint serverless para obtener productos
-├── index.html              # Página principal
-├── products.html           # Catálogo de productos
-├── productDetail.html      # Detalle de producto
-├── cart.html               # Carrito de compras
-├── styles.css              # Estilos globales
+│   └── catalogo.js         # Endpoint serverless para obtener productos desde Google Sheets
+├── index.html              # Página principal (landing)
+├── products.html           # Catálogo de productos con filtros
+├── productDetail.html      # Detalle de producto individual
+├── styles.css              # Estilos globales (diseño neobrutalista)
+├── server.js               # Servidor de desarrollo local
 ├── package.json            # Dependencias del proyecto
-├── vercel.json             # Configuración de Vercel
+├── vercel.json             # Configuración de Vercel para deployment
 ├── js/
-│   ├── config.js           # Configuración del proyecto
-│   ├── apiClient.js        # Cliente para comunicarse con la API
-│   ├── cart.js             # Gestión del carrito
-│   ├── productRenderer.js  # Renderizado de productos
+│   ├── config.js           # Configuración del proyecto (WhatsApp, etc.)
+│   ├── apiClient.js        # Cliente para comunicarse con la API serverless
+│   ├── googleSheets.js     # Utilidades para Google Sheets (legacy)
+│   ├── productRenderer.js  # Renderizado de productos en cards
+│   ├── theme.js            # Gestión de tema claro/oscuro
 │   ├── index.js            # Script para index.html
-│   ├── products.js         # Script para products.html
-│   ├── productDetail.js    # Script para productDetail.html
-│   └── cartPage.js         # Script para cart.html
+│   ├── products.js         # Script para products.html (filtros y catálogo)
+│   └── productDetail.js    # Script para productDetail.html
 ├── README.md               # Este archivo
-├── README_API.md           # Documentación de la API
-├── ENV_SETUP.md            # Guía de configuración de variables
-└── SETUP_DEV.md            # Guía de desarrollo local
+├── README_API.md           # Documentación de la API serverless
+├── ENV_SETUP.md            # Guía de configuración de variables de entorno
+├── SETUP_DEV.md            # Guía de desarrollo local
+└── SOLUCION_ERRORES.md     # Solución de problemas comunes
 ```
 
 ## 🎯 Funcionalidades
 
-### Búsqueda y Filtros
-- Búsqueda por marca, modelo o RAM
-- Filtros por gama (alta/media)
-- Filtro de productos 5G
+### Catálogo de Productos
+- Vista de productos organizados por marca
+- Filtros dinámicos por marca (Apple, Xiaomi, Samsung, Motorola, Sony, Nintendo)
+- Carga dinámica desde Google Sheets vía API serverless
+- Diseño responsive con cards neobrutalistas
 
-### Carrito de Compras
-- Agregar productos al carrito
-- Ver resumen de compra
-- Eliminar productos
-- Persistencia con localStorage
+### Detalle de Producto
+- Galería de imágenes múltiples
+- Especificaciones técnicas completas
+- Precios en USD y ARS
+- Opciones de pago en cuotas (6 y 12 cuotas)
+- Botón directo de compra por WhatsApp
 
 ### Integración WhatsApp
-- Al hacer clic en "Comprar por WhatsApp" en el detalle del producto
-- Al hacer clic en "Comprar por WhatsApp" en el carrito
-- Mensaje automático con marca y modelo del producto
+- Compra directa desde el detalle del producto
+- Mensaje automático pre-formateado con marca y modelo
+- Configuración del número en `js/config.js`
+
+### Tema Claro/Oscuro
+- Toggle de tema en el header
+- Persistencia de preferencia en localStorage
+- Transiciones suaves entre temas
 
 ## 🔧 Solución de Problemas
 
@@ -211,30 +224,60 @@ El proyecto incluye logs detallados para debugging:
 - Asegúrate de que la clave privada incluya los `\n` (saltos de línea)
 - Verifica que hayas compartido la hoja con el email de la Service Account
 
-### El carrito no persiste
+### El tema no persiste
 
 - Verifica que localStorage esté habilitado en tu navegador
 - No uses modo incógnito para desarrollo
 
 ## 📝 Notas
 
-- Los datos se cargan cada vez que se visita una página desde la API serverless
-- El carrito se guarda en localStorage del navegador
+- Los datos se cargan cada vez que se visita una página desde la API serverless (`/api/catalogo`)
+- El tema (claro/oscuro) se guarda en localStorage del navegador
 - Las imágenes deben ser URLs públicas accesibles
 - El formato de fotos en Google Sheets: `url1, url2, url3` (separadas por coma y espacio)
 - Los logs de depuración te ayudarán a verificar la integridad de los datos y la conexión
 - La API procesa automáticamente los datos y convierte valores numéricos cuando es posible
+- El proyecto está configurado para deployment en Vercel con funciones serverless
+
+## 🚀 Deployment
+
+El proyecto está configurado para deployment en Vercel:
+
+1. **Conecta tu repositorio de GitHub a Vercel**
+2. **Configura las variables de entorno** en Vercel Dashboard:
+   - `GOOGLE_SHEET_ID`
+   - `GOOGLE_SERVICE_ACCOUNT_EMAIL`
+   - `GOOGLE_PRIVATE_KEY`
+3. **Deploy automático**: Cada push a la rama principal desplegará automáticamente
+
+La función serverless en `api/catalogo.js` se ejecutará automáticamente en Vercel.
 
 ## 🎨 Personalización
 
 Puedes personalizar:
-- Colores en `styles.css` (variables CSS)
-- Mensajes de WhatsApp en `js/cart.js`
+- Colores y estilos en `styles.css` (diseño neobrutalista)
+- Número de WhatsApp en `js/config.js`
 - Formato de precios en `js/productRenderer.js`
+- Marcas disponibles en `js/products.js` (array `MARCAS_DISPONIBLES`)
+
+## 🛠️ Stack Tecnológico
+
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Backend**: Node.js con Vercel Serverless Functions
+- **Base de Datos**: Google Sheets (vía Google Sheets API)
+- **Autenticación**: Google Service Account (JWT)
+- **Deployment**: Vercel
+- **Desarrollo Local**: Node.js HTTP Server
 
 ## 📞 Soporte
 
 Si tienes problemas, revisa:
-1. La consola del navegador (F12)
-2. Que la configuración en `js/config.js` sea correcta
-3. Que los datos en Google Sheets tengan el formato correcto
+1. La consola del navegador (F12) para errores del frontend
+2. Los logs del servidor (terminal) para errores de la API
+3. Que la configuración en `js/config.js` sea correcta
+4. Que los datos en Google Sheets tengan el formato correcto
+5. Los archivos de documentación: `SETUP_DEV.md`, `ENV_SETUP.md`, `SOLUCION_ERRORES.md`
+
+## 📄 Licencia
+
+ISC
