@@ -58,18 +58,95 @@
       <div class="nav-links">
         <a href="products.html" class="nav-link">Ofertas</a>
         <a href="products.html" class="nav-link">Marcas</a>
+        <!--
         <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">
           <i class="fas fa-moon theme-icon"></i>
         </button>
+        -->
         <!--<a href="cart.html" class="nav-link nav-cta">Mi carrito (0)</a>-->
       </div>
     </nav>
   </header>
-
+  <!-- HERO -->
+     <div id="banner">
+        <img src="banner.png" alt="banner">
+     </div>
   <!-- CONTENIDO -->
   <main class="container">
+    <!-- CATEGORÍAS -->
+    <section>
+      <div class="section-header">
+        <div>
+          <div class="section-title">
+            <span class="section-title-badge"></span>
+            Categorías rápidas
+          </div>
+          <!--
+          <p class="section-sub">
+            Filtra por el tipo de experiencia que querés: cámara, gaming, batería o todo junto.
+          </p>
+          -->
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSCADOR Y FILTROS -->
+    <section class="toolbar">
+      <!--
+      <form class="search">
+        <input type="text" placeholder="Buscar por marca, modelo o RAM..." />
+        <button type="submit">Buscar</button>
+      </form>
+      -->
+      <div class="filters" id="filters-container">
+        <button class="filter-chip is-active" type="button" data-marca="todos">Todos</button>
+        <!-- Los botones de marcas se generarán dinámicamente aquí -->
+      </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section>
+      <div class="section-header" style="margin-top: 10px;">
+        <div>
+          
+          <!--
+          <p class="section-sub">
+            Curamos 8 modelos que combinan precio, specs y diseño para que no tengas que pensar demasiado.
+          </p>
+          -->
+        </div>
+        
+      </div>
+
+      <div class="products-grid" id="products-grid">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+          <p>Cargando productos...</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="categories-row">
+        <article class="category-card">
+          <div class="category-name">Fotografía Pro</div>
+          <div class="category-meta">Cámaras 48MP+ · Estabilización óptica</div>
+        </article>
+        <article class="category-card">
+          <div class="category-name">Gaming Mode</div>
+          <div class="category-meta">Pantalla 120Hz · Cooling avanzado</div>
+        </article>
+        <article class="category-card">
+          <div class="category-name">Batería infinita</div>
+          <div class="category-meta">5000mAh+ · Carga rápida 65W</div>
+        </article>
+        <article class="category-card">
+          <div class="category-name">Compactos</div>
+          <div class="category-meta">Tamaño bolsillo · Peso ultra ligero</div>
+        </article>
+      </div>
+
     <!-- HERO -->
-    <section class="hero neo-card">
+  <section class="hero neo-card">
+      <!--
       <div class="hero-left">
         <div class="hero-tag chip">Nuevo drop · Edición 2026</div>
         <h1 class="hero-title">
@@ -81,10 +158,10 @@
         </p>
 
         <div class="hero-benefits">
-          <!--
+          !--
           <span class="hero-benefit">Envío 24h</span>
-          -->
-          <!--<span class="hero-benefit">Garantía 1 año</span>-->
+          --
+          !--<span class="hero-benefit">Garantía 1 año</span>--
           <span class="hero-benefit">6 y 12 cuotas</span>
         </div>
 
@@ -92,33 +169,33 @@
           <a href="products.html" class="btn-primary">
             Ver catálogo completo
           </a>
-          <!--
+          !--
           <button class="btn-ghost">
             Ver mejores ofertas
           </button>
-          -->
+          --
         </div>
 
         <div class="hero-metrics">
-          <!--
+          !--
           <div>
             <div class="hero-metric-label">Clientes felices</div>
             <div class="hero-metric-value">+15.000</div>
           </div>
-          -->
+          --
           <div>
             <div class="hero-metric-label">Modelos activos</div>
             <div class="hero-metric-value">+ 120</div>
           </div>
-          <!--
+          !--
           <div>
             <div class="hero-metric-label">Puntaje</div>
             <div class="hero-metric-value">4.9★</div>
           </div>
-          -->
+          --
         </div>
       </div>
-
+    -->
       <div class="hero-right">
         <div class="hero-phone-card neo-card" id="hero-phone-card">
           <!-- Se cargará dinámicamente -->
@@ -146,82 +223,9 @@
         -->
       </div>
     </section>
-
-    <!-- BUSCADOR Y FILTROS -->
-    <section class="toolbar">
-      <!--
-      <form class="search">
-        <input type="text" placeholder="Buscar por marca, modelo o RAM..." />
-        <button type="submit">Buscar</button>
-      </form>
-      -->
-      <div class="filters" id="filters-container">
-        <button class="filter-chip is-active" type="button" data-marca="todos">Todos</button>
-        <!-- Los botones de marcas se generarán dinámicamente aquí -->
-      </div>
-    </section>
-
-    <!-- CATEGORÍAS -->
-    <section>
-      <div class="section-header">
-        <div>
-          <div class="section-title">
-            <span class="section-title-badge"></span>
-            Categorías rápidas
-          </div>
-          <!--
-          <p class="section-sub">
-            Filtra por el tipo de experiencia que querés: cámara, gaming, batería o todo junto.
-          </p>
-          -->
-        </div>
-      </div>
-
-      <div class="categories-row">
-        <article class="category-card">
-          <div class="category-name">Fotografía Pro</div>
-          <div class="category-meta">Cámaras 48MP+ · Estabilización óptica</div>
-        </article>
-        <article class="category-card">
-          <div class="category-name">Gaming Mode</div>
-          <div class="category-meta">Pantalla 120Hz · Cooling avanzado</div>
-        </article>
-        <article class="category-card">
-          <div class="category-name">Batería infinita</div>
-          <div class="category-meta">5000mAh+ · Carga rápida 65W</div>
-        </article>
-        <article class="category-card">
-          <div class="category-name">Compactos</div>
-          <div class="category-meta">Tamaño bolsillo · Peso ultra ligero</div>
-        </article>
-      </div>
-    </section>
-
-    <!-- PRODUCTOS DESTACADOS -->
-    <section>
-      <div class="section-header" style="margin-top: 10px;">
-        <div>
-          <div class="section-title">
-            <span class="section-title-badge" style="background:var(--accent-green);"></span>
-            Destacados de hoy
-          </div>
-          <!--
-          <p class="section-sub">
-            Curamos 8 modelos que combinan precio, specs y diseño para que no tengas que pensar demasiado.
-          </p>
-          -->
-        </div>
-        <span class="chip">Actualizado hoy · 8 modelos</span>
-      </div>
-
-      <div class="products-grid" id="products-grid">
-        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-          <p>Cargando productos...</p>
-        </div>
-      </div>
-    </section>
   </main>
 
+  
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
