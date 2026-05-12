@@ -312,17 +312,18 @@ function updateHeroContent(product) {
     : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
   
   heroPhoneCard.innerHTML = `
-    <div class="phone-image-frame">
-      <div class="phone-image-placeholder" style="${imageStyle}">
-        ${!image ? modeloStr : ''}
-      </div>
-    </div>
+    
     <div class="phone-info">
       <div class="phone-name">${modeloStr}</div>
       <div class="phone-tagline">${tagline}</div>
       <div class="phone-price">${productRenderer.formatPrice(price, CONFIG.defaultCurrency)}</div>
       <div class="phone-specs">
         ${displaySpecs.map(spec => `<span>${spec}</span>`).join('')}
+      </div>
+    </div>
+    <div class="phone-image-frame">
+      <div class="phone-image-placeholder" style="${imageStyle}">
+        ${!image ? modeloStr : ''}
       </div>
     </div>
   `;

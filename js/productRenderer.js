@@ -54,7 +54,7 @@ class ProductRenderer {
           <div>
             <div class="product-price">${this.formatPrice(price, CONFIG.defaultCurrency)}</div>
           </div>
-          ${installments ? `<div class="product-installments">${installments}</div>` : ''}
+          
         </div>
         <div class="product-tags">
           ${product.ram ? `<span class="product-tag">${product.ram}GB RAM</span>` : ''}
@@ -135,27 +135,6 @@ class ProductRenderer {
               </div>
             ` : ''}
           </div>
-          <div class="product-options">
-            ${product.memoria_interna ? `
-              <div class="option-block">
-                <div class="option-title">Memoria interna</div>
-                <div class="option-list">
-                  <span class="pill is-active">${product.memoria_interna} GB</span>
-                </div>
-              </div>
-            ` : ''}
-            <div class="option-block">
-              <div class="option-title">Precios</div>
-              <div class="option-list" style="flex-direction: column; align-items: flex-start; gap: 4px;">
-                <div class="price-row" style="font-size: 0.75rem; display: flex; align-items: center; gap: 8px;">
-                  <span>Contado: ${this.formatPrice(product.contado_ars, 'ars')}</span>
-                  ${product.contado_ars ? `<button class="btn-copy-small" data-price="${product.contado_ars}" title="Copiar precio"><i class="fas fa-copy"></i></button>` : ''}
-                </div>
-                ${product.cuotas_6 ? `<div style="font-size: 0.75rem;">6 cuotas: ${this.formatPrice(product.cuotas_6, 'ars')}</div>` : ''}
-                ${product.cuotas_12 ? `<div style="font-size: 0.75rem;">12 cuotas: ${this.formatPrice(product.cuotas_12, 'ars')}</div>` : ''}
-              </div>
-            </div>
-          </div>
           <div class="product-actions">
             <div class="store-alias-section">
               <div class="alias-label">Alias de la tienda:</div>
@@ -169,12 +148,6 @@ class ProductRenderer {
             <button class="btn-primary" id="send-receipt-btn" data-product-id="${product.id}">
               Enviar comprobante
             </button>
-          </div>
-          <div class="product-meta-row">
-            <span class="meta-item">Stock: disponible</span>
-            <span class="meta-item">Envío 24h</span>
-            <span class="meta-item">Garantía oficial 12 meses</span>
-            <span class="meta-item">Devolución en 30 días</span>
           </div>
         </article>
       `,
