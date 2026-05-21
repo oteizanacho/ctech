@@ -1719,6 +1719,200 @@ footer {
   box-shadow: 3px 3px 0 var(--border-color);
 }
 
+  .hero-mini-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  
+  .slider-product-card {
+    min-width: 160px;
+    max-width: 160px;
+  }
+  
+  .slider-product-image {
+    height: 120px;
+  }
+  
+  .marca-slider-title {
+    font-size: 1.25rem;
+  }
+
+  .gallery-thumbs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- LIGHTBOX PARA GALERÍA DE PRODUCTOS ---------- */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.lightbox-btn:active {
+  transform: scale(0.95);
+}
+
+.lightbox-btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10001;
+}
+
+.lightbox-btn-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.lightbox-btn-close:active {
+  transform: scale(0.95);
+}
+
+.lightbox-btn-prev,
+.lightbox-btn-next {
+  position: relative;
+}
+
+/* En modo dark, ajustar estilos del lightbox */
+
+/* Responsive: en móvil, botones más pequeños y ocultar en pantallas muy pequeñas */
+@media (max-width: 768px) {
+  .lightbox-container {
+    width: 95%;
+    gap: 10px;
+  }
+
+  .lightbox-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .lightbox-btn-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .lightbox-image {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-btn-prev,
+  .lightbox-btn-next {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .lightbox-btn-prev {
+    left: 10px;
+  }
+
+  .lightbox-btn-next {
+    right: 10px;
+  }
+
+  .lightbox-container {
+    gap: 0;
+  }
+}
+
+.page-btn {
+  padding: 6px 12px;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: var(--accent-color);
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--border-color);
+}
+
 .page-btn.active {
   background: var(--border-color);
   color: var(--card-bg);
@@ -1727,4 +1921,34 @@ footer {
 .page-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.marquee-banner {
+  background-color: var(--accent-color);
+  border-top: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
+  padding: 12px 0;
+  margin-top: 24px;
+  margin-bottom: 32px;
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.marquee-content {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee-scroll 15s linear infinite;
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-33.33%); }
 }

@@ -52,6 +52,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     productLayout.innerHTML = rendered.gallery + rendered.info;
     detailSections.innerHTML = rendered.specs + rendered.description;
     
+    // Renderizar productos similares
+    const similarProducts = products
+      .filter(p => p.marca === product.marca && p.id != product.id)
+      .slice(0, 4);
+      
+    const similarSection = document.getElementById('similar-products');
+    if (similarSection && similarProducts.length > 0) {
+      const similarProductsHtml = similarProducts.map(p => {
+        const image = productRenderer.getMainImage(p);
+        const modeloStr = String(p.modelo || 'Producto');
+        const marcaStr = String(p.marca || '');
+        
+        let imageStyle = '';
+        if (image) {
+          imageStyle = `--slider-image: url('${image}'); background: #fff;`;
+        } else {
+          imageStyle = 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
+        }
+        
+        const specs = [];
+        if (p.ram) specs.push(`${p.ram}GB RAM`);
+        if (p.memoria_interna) specs.push(`${p.memoria_interna}GB`);
+        if (p.tamano_pantalla) specs.push(`${p.tamano_pantalla}"`);
+        if (p.camara_principal) specs.push(`${p.camara_principal}MP`);
+        
+        return `
+          <div class="slider-product-card" onclick="window.location.href='productDetail.html?id=${p.id}'" style="cursor:pointer; width: 100%; min-width: unset; max-width: unset;">
+            <div class="slider-product-image" style="${imageStyle}">
+              ${!image ? modeloStr : ''}
+            </div>
+            <div class="slider-product-info">
+              <div class="slider-product-name">${modeloStr}</div>
+              <div class="slider-product-brand">${marcaStr}</div>
+              ${specs.length > 0 ? `<div class="slider-product-specs">${specs.join(' · ')}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      similarSection.innerHTML = `
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 24px; text-transform: uppercase;">Similares</h2>
+        <div class="products-grid">
+          ${similarProductsHtml}
+        </div>
+      `;
+    }
+    
     // Actualizar título de la página
     document.title = `${product.marca} ${product.modelo} | ChingaTech Store`;
     
