@@ -300,29 +300,48 @@ function renderMarcaView(marca, products) {
   // Marcar contenedor como filtrado por marca
   productsContainer.classList.add('marca-filtered');
   
-  productsContainer.innerHTML = renderMarcaList(marcaNormalizada, productosMarca);
+  // Ordenar productos por precio de mayor a menor
+  currentFilteredProducts = [...productosMarca].sort((a, b) => {
+    const precioA = CONFIG.defaultCurrency === 'usd' ? (a.contado_usd || 0) : (a.contado_ars || 0);
+    const precioB = CONFIG.defaultCurrency === 'usd' ? (b.contado_usd || 0) : (b.contado_ars || 0);
+    return precioB - precioA;
+  });
+  currentFilteredPage = 1;
+  
+  productsContainer.innerHTML = `
+    <div class="marca-list-section">
+      <div class="marca-slider-header">
+        <h2 class="marca-slider-title">${marcaNormalizada}</h2>
+        <span class="marca-slider-count">${currentFilteredProducts.length} ${currentFilteredProducts.length === 1 ? 'producto' : 'productos'}</span>
+      </div>
+      <div class="marca-list-container" id="paginated-list-container">
+      </div>
+      <div class="pagination-controls" id="pagination-controls" style="display: flex; justify-content: center; gap: 8px; margin-top: 32px; align-items: center;">
+      </div>
+    </div>
+  `;
+  
+  updatePaginatedView(marcaNormalizada);
 }
 
-// Renderizar lista vertical de productos de una marca (cuando se filtra)
-function renderMarcaList(marca, productos) {
-  // Ordenar productos por precio de mayor a menor
-  const productosOrdenados = [...productos].sort((a, b) => {
-    // Usar el precio según la moneda configurada
-    const precioA = CONFIG.defaultCurrency === 'usd' 
-      ? (a.contado_usd || 0) 
-      : (a.contado_ars || 0);
-    const precioB = CONFIG.defaultCurrency === 'usd' 
-      ? (b.contado_usd || 0) 
-      : (b.contado_ars || 0);
-    return precioB - precioA; // Orden descendente (mayor a menor)
-  });
+let currentFilteredProducts = [];
+let currentFilteredPage = 1;
+const PRODUCTS_PER_PAGE = 15;
+
+function updatePaginatedView(marcaNormalizada) {
+  const container = document.getElementById('paginated-list-container');
+  const controls = document.getElementById('pagination-controls');
+  if (!container || !controls) return;
   
-  const productosHtml = productosOrdenados.map(product => {
+  const startIndex = (currentFilteredPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const pageProducts = currentFilteredProducts.slice(startIndex, endIndex);
+  
+  container.innerHTML = pageProducts.map(product => {
     const image = productRenderer.getMainImage(product);
     const modeloStr = String(product.modelo || 'Producto');
     const marcaStr = String(product.marca || '');
     
-    // Usar CSS variable para la imagen con margen blanco
     let imageStyle = '';
     if (image) {
       imageStyle = `--slider-image: url('${image}'); background: #fff;`;
@@ -330,7 +349,6 @@ function renderMarcaList(marca, productos) {
       imageStyle = 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
     }
     
-    // Resumen del producto (sin precio)
     const specs = [];
     if (product.ram) specs.push(`${product.ram}GB RAM`);
     if (product.memoria_interna) specs.push(`${product.memoria_interna}GB`);
@@ -338,7 +356,7 @@ function renderMarcaList(marca, productos) {
     if (product.camara_principal) specs.push(`${product.camara_principal}MP`);
     
     return `
-      <div class="slider-product-card marca-list-item" data-product-id="${product.id}">
+      <div class="slider-product-card marca-list-item" data-product-id="${product.id}" onclick="window.location.href='productDetail.html?id=${product.id}'" style="cursor:pointer;">
         <div class="slider-product-image" style="${imageStyle}">
           ${!image ? modeloStr : ''}
         </div>
@@ -351,17 +369,33 @@ function renderMarcaList(marca, productos) {
     `;
   }).join('');
   
-  return `
-    <div class="marca-list-section">
-      <div class="marca-slider-header">
-        <h2 class="marca-slider-title">${marca}</h2>
-        <span class="marca-slider-count">${productos.length} ${productos.length === 1 ? 'producto' : 'productos'}</span>
-      </div>
-      <div class="marca-list-container">
-        ${productosHtml}
-      </div>
-    </div>
-  `;
+  const totalPages = Math.ceil(currentFilteredProducts.length / PRODUCTS_PER_PAGE);
+  if (totalPages <= 1) {
+    controls.innerHTML = '';
+    return;
+  }
+  
+  let controlsHtml = `<button class="page-btn" onclick="goToPage(${currentFilteredPage - 1}, '${marcaNormalizada}')" ${currentFilteredPage === 1 ? 'disabled' : ''}>&lt;-</button>`;
+  
+  for (let i = 1; i <= totalPages; i++) {
+    controlsHtml += `<button class="page-btn ${i === currentFilteredPage ? 'active' : ''}" onclick="goToPage(${i}, '${marcaNormalizada}')">${i}</button>`;
+  }
+  
+  controlsHtml += `<button class="page-btn" onclick="goToPage(${currentFilteredPage + 1}, '${marcaNormalizada}')" ${currentFilteredPage === totalPages ? 'disabled' : ''}>-&gt;</button>`;
+  
+  controls.innerHTML = controlsHtml;
+}
+
+window.goToPage = function(page, marcaNormalizada) {
+  const totalPages = Math.ceil(currentFilteredProducts.length / PRODUCTS_PER_PAGE);
+  if (page >= 1 && page <= totalPages) {
+    currentFilteredPage = page;
+    updatePaginatedView(marcaNormalizada);
+    const section = document.querySelector('.marca-list-section');
+    if (section) {
+      window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    }
+  }
 }
 
 // Renderizar slider de una marca (para vista "todos")
@@ -378,8 +412,8 @@ function renderMarcaSlider(marca, productos) {
     return precioB - precioA; // Orden descendente (mayor a menor)
   });
   
-  // Limitar a 20 productos inicialmente
-  const PRODUCTOS_LIMITE = 20;
+  // Limitar a 15 productos inicialmente
+  const PRODUCTOS_LIMITE = 15;
   const productosMostrados = productosOrdenados.slice(0, PRODUCTOS_LIMITE);
   const hayMasProductos = productosOrdenados.length > PRODUCTOS_LIMITE;
   const marcaId = marca.toLowerCase().replace(/\s+/g, '-');
@@ -418,39 +452,6 @@ function renderMarcaSlider(marca, productos) {
     `;
   }).join('');
   
-  // Generar HTML de productos adicionales (ocultos inicialmente)
-  const productosAdicionalesHtml = hayMasProductos ? productosOrdenados.slice(PRODUCTOS_LIMITE).map(product => {
-    const image = productRenderer.getMainImage(product);
-    const modeloStr = String(product.modelo || 'Producto');
-    const marcaStr = String(product.marca || '');
-    
-    let imageStyle = '';
-    if (image) {
-      imageStyle = `--slider-image: url('${image}'); background: #fff;`;
-    } else {
-      imageStyle = 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
-    }
-    
-    const specs = [];
-    if (product.ram) specs.push(`${product.ram}GB RAM`);
-    if (product.memoria_interna) specs.push(`${product.memoria_interna}GB`);
-    if (product.tamano_pantalla) specs.push(`${product.tamano_pantalla}"`);
-    if (product.camara_principal) specs.push(`${product.camara_principal}MP`);
-    
-    return `
-      <div class="slider-product-card marca-expanded-item" data-product-id="${product.id}" style="display: none;">
-        <div class="slider-product-image" style="${imageStyle}">
-          ${!image ? modeloStr : ''}
-        </div>
-        <div class="slider-product-info">
-          <div class="slider-product-name">${modeloStr}</div>
-          <div class="slider-product-brand">${marcaStr}</div>
-          ${specs.length > 0 ? `<div class="slider-product-specs">${specs.join(' · ')}</div>` : ''}
-        </div>
-      </div>
-    `;
-  }).join('') : '';
-  
   return `
     <div class="marca-slider-section" data-marca="${marcaId}">
       <div class="marca-slider-header">
@@ -461,13 +462,12 @@ function renderMarcaSlider(marca, productos) {
         <button class="slider-nav slider-nav-prev" aria-label="Anterior">‹</button>
         <div class="marca-slider" data-marca="${marcaId}">
           ${productosHtml}
-          ${productosAdicionalesHtml}
         </div>
         <button class="slider-nav slider-nav-next" aria-label="Siguiente">›</button>
       </div>
       ${hayMasProductos ? `
         <div class="marca-ver-mas-container">
-          <button class="btn-ver-mas" data-marca="${marcaId}" data-expanded="false">
+          <button class="btn-ver-mas" data-marca="${marcaId}">
             Ver más (${productosOrdenados.length - PRODUCTOS_LIMITE} más)
           </button>
         </div>
@@ -541,29 +541,7 @@ function setupEventListeners() {
   document.querySelectorAll('.btn-ver-mas').forEach(function(btn) {
     btn.addEventListener('click', function() {
       const marcaId = this.getAttribute('data-marca');
-      const isExpanded = this.getAttribute('data-expanded') === 'true';
-      const slider = document.querySelector(`.marca-slider[data-marca="${marcaId}"]`);
-      const expandedItems = slider.querySelectorAll('.marca-expanded-item');
-      
-      if (isExpanded) {
-        // Ocultar productos adicionales
-        expandedItems.forEach(item => {
-          item.style.display = 'none';
-        });
-        this.setAttribute('data-expanded', 'false');
-        const count = expandedItems.length;
-        this.textContent = `Ver más (${count} más)`;
-      } else {
-        // Mostrar productos adicionales
-        expandedItems.forEach(item => {
-          item.style.display = '';
-        });
-        this.setAttribute('data-expanded', 'true');
-        this.textContent = 'Ver menos';
-      }
-      
-      // Reconfigurar navegación del slider si es necesario
-      setupSliderNavigation();
+      window.location.href = `products.html?marca=${encodeURIComponent(marcaId)}`;
     });
   });
 }
