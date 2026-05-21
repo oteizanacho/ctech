@@ -19,7 +19,8 @@
   "dependencies": {
     "dotenv": "^16.6.1",
     "google-auth-library": "^10.5.0",
-    "google-spreadsheet": "^4.1.1"
+    "google-spreadsheet": "^4.1.1",
+    "postcss": "^8.5.15"
   },
   "devDependencies": {
     "@vercel/node": "^3.0.0"
