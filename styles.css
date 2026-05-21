@@ -50,7 +50,7 @@ img {
 :root {
   /* Modo Light (por defecto) - Neobrutalista vibrante */
   --text-color: #1a1a1a;
-  --bg-color: #fff5e6;
+  --bg-color: #FFCBCA;
   --primary-color: #f70909;
   --secondary-color: #cb1802;
   --accent-color: #c8ff00;
@@ -59,7 +59,7 @@ img {
   --shadow: 6px 6px 0 #1a1a1a;
   --radius: 18px;
   /* Colores adicionales */
-  --card-bg: #ffffff;
+  --card-bg: #FFCBCA;
   --card-bg-alt: #fff8f0;
   --text-secondary: #666666;
   --hover-primary: #cb1802;
@@ -134,7 +134,7 @@ header {
   display: flex;
   align-items: center;
   /*gap: 16px;*/
-  height: 12vh;
+  /*height: 12vh;*/
   padding: 0 12rem;
 }
 
@@ -646,7 +646,7 @@ header {
   overflow: hidden;
   position: relative;
   padding: 8px;
-  background-color: var(--card-bg) !important;
+  
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -706,7 +706,7 @@ header {
   padding: 2px 6px;
   border-radius: 999px;
   border: 2px solid var(--border-color);
-  background: var(--card-bg);
+  background: var(--card-bg-alt);
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -743,7 +743,7 @@ header {
 }
 
 .gallery-card {
-  background: var(--card-bg-alt);
+  background: var(--bg-color);
   padding: 16px;
   transition: background-color 0.3s ease;
 }
@@ -763,7 +763,7 @@ header {
   box-shadow: 4px 4px 0 var(--border-color);
   margin-bottom: 10px;
   padding: 20px;
-  background-color: var(--card-bg) !important;
+  
   overflow: hidden;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
@@ -841,7 +841,7 @@ header {
 }
 
 .product-info-card {
-  background: var(--card-bg-alt);
+  background: var(--bg-color);
   padding: 18px 18px 16px;
   display: flex;
   flex-direction: column;
@@ -861,7 +861,7 @@ header {
   padding: 3px 10px;
   border-radius: 999px;
   border: 2px solid var(--border-color);
-  background: var(--card-bg);
+  background: var(--card-bg-alt);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 800;
@@ -1078,7 +1078,7 @@ header {
 /* ---------- FOOTER ---------- */
 footer {
   border-top: 3px solid var(--border-color);
-  background: var(--card-bg);
+  background: var(--card-bg-alt);
   margin-top: 24px;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -1140,9 +1140,7 @@ footer {
   }
 
   .nav-links {
-    margin-left: 0;
-    justify-content: center;
-    flex-wrap: wrap;
+    font-size: 18px;
   }
 
   .hero {
@@ -1450,7 +1448,7 @@ footer {
   overflow: hidden;
   position: relative;
   padding: 8px;
-  background-color: var(--card-bg) !important;
+  
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -1511,8 +1509,11 @@ footer {
   
   .slider-nav {
     width: 36px;
-    height: 36px;
-    font-size: 20px;
+        height: 36px;
+        font-size: 24px;
+        border: none;
+        background: none;
+        box-shadow: none;
   }
 }
 
