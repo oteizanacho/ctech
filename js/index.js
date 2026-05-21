@@ -301,25 +301,22 @@ function updateHeroContent(product) {
   if (product.bateria_capacidad) specs.push(`Batería ${product.bateria_capacidad}mAh`);
   const tagline = specs.length > 0 ? specs.join(' · ') : 'Especificaciones destacadas';
   
-  // Especificaciones para mostrar
-  const displaySpecs = [];
-  if (product.memoria_interna) displaySpecs.push(`${product.memoria_interna} GB`);
-  if (product.ram) displaySpecs.push(`${product.ram} GB RAM`);
-  if (product.tamano_pantalla) displaySpecs.push(`${product.tamano_pantalla}"`);
+  // Nombre completo con specs
+  let fullName = modeloStr;
+  if (product.memoria_interna) fullName += ` - ${product.memoria_interna} GB`;
+  if (product.ram) fullName += ` - ${product.ram} GB RAM`;
   
   const imageStyle = image 
-    ? `background-image: url('${image}'); background-size: cover; background-position: center;`
+    ? `background-image: url('${image}'); background-size: contain; background-position: center; background-repeat: no-repeat;`
     : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
   
   heroPhoneCard.innerHTML = `
     
     <div class="phone-info">
-      <div class="phone-name">${modeloStr}</div>
+      <div style="border: 2px solid #111; background-color: #fff; text-transform: uppercase; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 999px; display: inline-block; width: fit-content; margin-bottom: 8px; color: #111;">NUEVO DROP - EDICIÓN 2026</div>
+      <div class="phone-name">${fullName}</div>
       <div class="phone-tagline">${tagline}</div>
       <div class="phone-price">${productRenderer.formatPrice(price, CONFIG.defaultCurrency)}</div>
-      <div class="phone-specs">
-        ${displaySpecs.map(spec => `<span>${spec}</span>`).join('')}
-      </div>
     </div>
     <div class="phone-image-frame">
       <div class="phone-image-placeholder" style="${imageStyle}">
