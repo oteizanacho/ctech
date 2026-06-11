@@ -307,8 +307,8 @@ function updateHeroContent(product) {
   if (product.ram) fullName += ` - ${product.ram} GB RAM`;
   
   const imageStyle = image 
-    ? `background-image: url('${image}'); background-size: contain; background-position: center; background-repeat: no-repeat;`
-    : 'background: linear-gradient(135deg, #e8f0ff, #c9d8ff);';
+    ? `background-color: #ffffff; background-image: url('${image}'); background-size: contain; background-position: center; background-repeat: no-repeat;`
+    : 'background-color: #ffffff;';
   
   heroPhoneCard.innerHTML = `
     

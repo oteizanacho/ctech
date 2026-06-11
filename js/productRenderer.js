@@ -103,7 +103,7 @@ class ProductRenderer {
 
     return {
       gallery: `
-        <article class="gallery-card neo-card">
+        <article class="gallery-card">
           <div class="gallery-main" style="${mainImageStyle}" id="main-gallery-image">
             ${!mainImage ? product.modelo : ''}
           </div>
@@ -113,7 +113,7 @@ class ProductRenderer {
         </article>
       `,
       info: `
-        <article class="product-info-card neo-card">
+        <article class="product-info-card">
           <div class="product-label-row">
             <span class="product-brand-chip">${product.marca}</span>
           </div>

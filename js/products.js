@@ -375,13 +375,13 @@ function updatePaginatedView(marcaNormalizada) {
     return;
   }
   
-  let controlsHtml = `<button class="page-btn" onclick="goToPage(${currentFilteredPage - 1}, '${marcaNormalizada}')" ${currentFilteredPage === 1 ? 'disabled' : ''}>&lt;-</button>`;
+  let controlsHtml = `<button class="page-btn" onclick="goToPage(${currentFilteredPage - 1}, '${marcaNormalizada}')" ${currentFilteredPage === 1 ? 'disabled' : ''}>‹</button>`;
   
   for (let i = 1; i <= totalPages; i++) {
     controlsHtml += `<button class="page-btn ${i === currentFilteredPage ? 'active' : ''}" onclick="goToPage(${i}, '${marcaNormalizada}')">${i}</button>`;
   }
   
-  controlsHtml += `<button class="page-btn" onclick="goToPage(${currentFilteredPage + 1}, '${marcaNormalizada}')" ${currentFilteredPage === totalPages ? 'disabled' : ''}>-&gt;</button>`;
+  controlsHtml += `<button class="page-btn" onclick="goToPage(${currentFilteredPage + 1}, '${marcaNormalizada}')" ${currentFilteredPage === totalPages ? 'disabled' : ''}>›</button>`;
   
   controls.innerHTML = controlsHtml;
 }
